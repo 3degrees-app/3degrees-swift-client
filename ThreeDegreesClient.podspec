@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name = '3DegreesClient'
+  s.name = 'ThreeDegreesClient'
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
   s.version = '0.0.9'
