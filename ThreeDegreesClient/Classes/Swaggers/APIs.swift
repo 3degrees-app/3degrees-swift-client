@@ -6,10 +6,10 @@
 
 import Foundation
 
-public class SwaggerClientAPI {
+public class ThreeDegreesClientAPI {
     public static var basePath = "https://api.threedegreesapp.com:9443"
     public static var credential: NSURLCredential?
-    public static var customHeaders: [String:String] = [:]  
+    public static var customHeaders: [String:String] = [:]
     static var requestBuilderFactory: RequestBuilderFactory = AlamofireRequestBuilderFactory()
 }
 
@@ -36,23 +36,23 @@ public class RequestBuilder<T> {
     let isBody: Bool
     let method: String
     let URLString: String
-    
+
     required public init(method: String, URLString: String, parameters: [String:AnyObject]?, isBody: Bool) {
         self.method = method
         self.URLString = URLString
         self.parameters = parameters
         self.isBody = isBody
-        
-        addHeaders(SwaggerClientAPI.customHeaders)
+
+        addHeaders(ThreeDegreesClientAPI.customHeaders)
     }
-    
+
     public func addHeaders(aHeaders:[String:String]) {
         for (header, value) in aHeaders {
             headers[header] = value
         }
     }
-    
-    public func execute(completion: (response: Response<T>?, error: ErrorType?) -> Void) { }
+
+    public func execute(completion: (response: Response<T>?, error: ErrorType?, headers: NSDictionary) -> Void) { }
 
     public func addHeader(name name: String, value: String) -> Self {
         if !value.isEmpty {
@@ -60,9 +60,9 @@ public class RequestBuilder<T> {
         }
         return self
     }
-    
+
     public func addCredential() -> Self {
-        self.credential = SwaggerClientAPI.credential
+        self.credential = ThreeDegreesClientAPI.credential
         return self
     }
 }

@@ -16,9 +16,9 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func activityGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?) -> Void)) {
-        activityGetWithRequestBuilder(limit: limit, page: page).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func activityGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        activityGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -45,18 +45,18 @@ public class DefaultAPI: APIBase {
      */
     public class func activityGetWithRequestBuilder(limit limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[Activity]> {
         let path = "/activity"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
             "limit": limit?.encodeToJSON(),
             "page": page?.encodeToJSON()
         ]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<[Activity]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<[Activity]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
@@ -66,9 +66,9 @@ public class DefaultAPI: APIBase {
      - parameter id: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func activityIdPut(id id: Int32, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        activityIdPutWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func activityIdPut(id id: Int32, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        activityIdPutWithRequestBuilder(id: id).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -85,15 +85,15 @@ public class DefaultAPI: APIBase {
     public class func activityIdPutWithRequestBuilder(id id: Int32) -> RequestBuilder<Empty> {
         var path = "/activity/{id}"
         path = path.stringByReplacingOccurrencesOfString("{id}", withString: "\(id)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -102,9 +102,9 @@ public class DefaultAPI: APIBase {
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authDelete(completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        authDeleteWithRequestBuilder().execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func authDelete(completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        authDeleteWithRequestBuilder().execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -118,15 +118,15 @@ public class DefaultAPI: APIBase {
      */
     public class func authDeleteWithRequestBuilder() -> RequestBuilder<Empty> {
         let path = "/auth"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -136,9 +136,9 @@ public class DefaultAPI: APIBase {
      - parameter emailAddress: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authForgotPasswordPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        authForgotPasswordPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func authForgotPasswordPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        authForgotPasswordPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -154,20 +154,19 @@ public class DefaultAPI: APIBase {
      */
     public class func authForgotPasswordPutWithRequestBuilder(emailAddress emailAddress: String) -> RequestBuilder<Empty> {
         let path = "/auth/forgot-password"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = emailAddress.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-
-    enum for parameter loginType
-    */
+     * enum for parameter loginType
+     */
     public enum LoginType_authLoginTypePut: String { 
         case Email = "email"
         case Facebook = "facebook"
@@ -179,9 +178,9 @@ public class DefaultAPI: APIBase {
      - parameter loginForm: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authLoginTypePut(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm, completion: ((data: SessionKey?, error: ErrorType?) -> Void)) {
-        authLoginTypePutWithRequestBuilder(loginType: loginType, loginForm: loginForm).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func authLoginTypePut(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm, completion: ((data: SessionKey?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        authLoginTypePutWithRequestBuilder(loginType: loginType, loginForm: loginForm).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -201,12 +200,12 @@ public class DefaultAPI: APIBase {
     public class func authLoginTypePutWithRequestBuilder(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm) -> RequestBuilder<SessionKey> {
         var path = "/auth/{loginType}"
         path = path.stringByReplacingOccurrencesOfString("{loginType}", withString: "\(loginType.rawValue)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = loginForm.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<SessionKey>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -216,9 +215,9 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func connectionsUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        connectionsUsernameDeleteWithRequestBuilder(username: username).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func connectionsUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        connectionsUsernameDeleteWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -235,15 +234,15 @@ public class DefaultAPI: APIBase {
     public class func connectionsUsernameDeleteWithRequestBuilder(username username: String) -> RequestBuilder<Empty> {
         var path = "/connections/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -253,9 +252,9 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func connectionsUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        connectionsUsernamePutWithRequestBuilder(username: username).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func connectionsUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        connectionsUsernamePutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -272,15 +271,15 @@ public class DefaultAPI: APIBase {
     public class func connectionsUsernamePutWithRequestBuilder(username username: String) -> RequestBuilder<Empty> {
         var path = "/connections/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -290,9 +289,9 @@ public class DefaultAPI: APIBase {
      - parameter contentType: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func contentContentTypeGet(contentType contentType: String, completion: ((data: Content?, error: ErrorType?) -> Void)) {
-        contentContentTypeGetWithRequestBuilder(contentType: contentType).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func contentContentTypeGet(contentType contentType: String, completion: ((data: Content?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        contentContentTypeGetWithRequestBuilder(contentType: contentType).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -311,15 +310,15 @@ public class DefaultAPI: APIBase {
     public class func contentContentTypeGetWithRequestBuilder(contentType contentType: String) -> RequestBuilder<Content> {
         var path = "/content/{contentType}"
         path = path.stringByReplacingOccurrencesOfString("{contentType}", withString: "\(contentType)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Content>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Content>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -330,9 +329,9 @@ public class DefaultAPI: APIBase {
      - parameter date: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesPatch(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        matchesUsernameDatesPatchWithRequestBuilder(username: username, date: date).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func matchesUsernameDatesPatch(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        matchesUsernameDatesPatchWithRequestBuilder(username: username, date: date).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -350,12 +349,12 @@ public class DefaultAPI: APIBase {
     public class func matchesUsernameDatesPatchWithRequestBuilder(username username: String, date: NSDate) -> RequestBuilder<Empty> {
         var path = "/matches/{username}/dates"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = date.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -366,9 +365,9 @@ public class DefaultAPI: APIBase {
      - parameter dates: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesPut(username username: String, dates: [NSDate], completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        matchesUsernameDatesPutWithRequestBuilder(username: username, dates: dates).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func matchesUsernameDatesPut(username username: String, dates: [NSDate], completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        matchesUsernameDatesPutWithRequestBuilder(username: username, dates: dates).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -386,12 +385,12 @@ public class DefaultAPI: APIBase {
     public class func matchesUsernameDatesPutWithRequestBuilder(username username: String, dates: [NSDate]) -> RequestBuilder<Empty> {
         var path = "/matches/{username}/dates"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = dates.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -401,9 +400,9 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        matchesUsernameDeleteWithRequestBuilder(username: username).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func matchesUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        matchesUsernameDeleteWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -420,15 +419,15 @@ public class DefaultAPI: APIBase {
     public class func matchesUsernameDeleteWithRequestBuilder(username username: String) -> RequestBuilder<Empty> {
         var path = "/matches/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -438,9 +437,9 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        matchesUsernamePutWithRequestBuilder(username: username).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func matchesUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        matchesUsernamePutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -457,15 +456,15 @@ public class DefaultAPI: APIBase {
     public class func matchesUsernamePutWithRequestBuilder(username username: String) -> RequestBuilder<Empty> {
         var path = "/matches/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -476,9 +475,9 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchmakersGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?) -> Void)) {
-        matchmakersGetWithRequestBuilder(limit: limit, page: page).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func matchmakersGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        matchmakersGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -498,18 +497,18 @@ public class DefaultAPI: APIBase {
      */
     public class func matchmakersGetWithRequestBuilder(limit limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
         let path = "/matchmakers"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
             "limit": limit?.encodeToJSON(),
             "page": page?.encodeToJSON()
         ]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<[User]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
@@ -518,9 +517,9 @@ public class DefaultAPI: APIBase {
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?) -> Void)) {
-        meGetWithRequestBuilder().execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        meGetWithRequestBuilder().execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -534,15 +533,15 @@ public class DefaultAPI: APIBase {
      */
     public class func meGetWithRequestBuilder() -> RequestBuilder<PrivateUser> {
         let path = "/me"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<PrivateUser>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<PrivateUser>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -552,9 +551,9 @@ public class DefaultAPI: APIBase {
      - parameter image: (form)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meImagePost(image image: NSURL, completion: ((data: Image?, error: ErrorType?) -> Void)) {
-        meImagePostWithRequestBuilder(image: image).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func meImagePost(image image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        meImagePostWithRequestBuilder(image: image).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -572,17 +571,17 @@ public class DefaultAPI: APIBase {
      */
     public class func meImagePostWithRequestBuilder(image image: NSURL) -> RequestBuilder<Image> {
         let path = "/me/image"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
             "image": image
         ]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Image>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
@@ -591,9 +590,9 @@ public class DefaultAPI: APIBase {
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meIsSingleDelete(completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        meIsSingleDeleteWithRequestBuilder().execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func meIsSingleDelete(completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        meIsSingleDeleteWithRequestBuilder().execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -607,15 +606,15 @@ public class DefaultAPI: APIBase {
      */
     public class func meIsSingleDeleteWithRequestBuilder() -> RequestBuilder<Empty> {
         let path = "/me/is-single"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -624,9 +623,9 @@ public class DefaultAPI: APIBase {
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meIsSinglePut(completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        meIsSinglePutWithRequestBuilder().execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func meIsSinglePut(completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        meIsSinglePutWithRequestBuilder().execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -640,23 +639,22 @@ public class DefaultAPI: APIBase {
      */
     public class func meIsSinglePutWithRequestBuilder() -> RequestBuilder<Empty> {
         let path = "/me/is-single"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-
-    enum for parameter gender
-    */
+     * enum for parameter gender
+     */
     public enum Gender_meMatchWithPut: String { 
         case Female = "female"
         case Male = "male"
@@ -667,9 +665,9 @@ public class DefaultAPI: APIBase {
      - parameter gender: (query)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meMatchWithPut(gender gender: Gender_meMatchWithPut? = nil, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        meMatchWithPutWithRequestBuilder(gender: gender).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func meMatchWithPut(gender gender: Gender_meMatchWithPut? = nil, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        meMatchWithPutWithRequestBuilder(gender: gender).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -685,17 +683,17 @@ public class DefaultAPI: APIBase {
      */
     public class func meMatchWithPutWithRequestBuilder(gender gender: Gender_meMatchWithPut? = nil) -> RequestBuilder<Empty> {
         let path = "/me/match-with"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
             "gender": gender?.rawValue
         ]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
@@ -705,9 +703,9 @@ public class DefaultAPI: APIBase {
      - parameter user: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func mePut(user user: UserForm, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        mePutWithRequestBuilder(user: user).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func mePut(user user: UserForm, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        mePutWithRequestBuilder(user: user).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -723,12 +721,12 @@ public class DefaultAPI: APIBase {
      */
     public class func mePutWithRequestBuilder(user user: UserForm) -> RequestBuilder<Empty> {
         let path = "/me"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = user.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -740,9 +738,9 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernameGet(username username: String, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Message]?, error: ErrorType?) -> Void)) {
-        messagesUsernameGetWithRequestBuilder(username: username, limit: limit, page: page).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func messagesUsernameGet(username username: String, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Message]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        messagesUsernameGetWithRequestBuilder(username: username, limit: limit, page: page).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -758,7 +756,7 @@ public class DefaultAPI: APIBase {
   "recipient" : "aeiou",
   "message_type" : "aeiou",
   "message" : "aeiou",
-  "timestamp" : "2000-01-23T04:56:07.000+0000"
+  "timestamp" : "2000-01-23T04:56:07.000+00:00"
 } ]}]
      
      - parameter username: (path)  
@@ -770,18 +768,18 @@ public class DefaultAPI: APIBase {
     public class func messagesUsernameGetWithRequestBuilder(username username: String, limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[Message]> {
         var path = "/messages/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
             "limit": limit?.encodeToJSON(),
             "page": page?.encodeToJSON()
         ]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<[Message]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<[Message]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
@@ -792,9 +790,9 @@ public class DefaultAPI: APIBase {
      - parameter image: (form)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernameImagePost(username username: String, image: NSURL, completion: ((data: Image?, error: ErrorType?) -> Void)) {
-        messagesUsernameImagePostWithRequestBuilder(username: username, image: image).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func messagesUsernameImagePost(username username: String, image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        messagesUsernameImagePostWithRequestBuilder(username: username, image: image).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -814,17 +812,17 @@ public class DefaultAPI: APIBase {
     public class func messagesUsernameImagePostWithRequestBuilder(username username: String, image: NSURL) -> RequestBuilder<Image> {
         var path = "/messages/{username}/image"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
             "image": image
         ]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Image>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
@@ -835,9 +833,9 @@ public class DefaultAPI: APIBase {
      - parameter message: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernamePut(username username: String, message: MessageForm, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        messagesUsernamePutWithRequestBuilder(username: username, message: message).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func messagesUsernamePut(username username: String, message: MessageForm, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        messagesUsernamePutWithRequestBuilder(username: username, message: message).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -855,12 +853,12 @@ public class DefaultAPI: APIBase {
     public class func messagesUsernamePutWithRequestBuilder(username username: String, message: MessageForm) -> RequestBuilder<Empty> {
         var path = "/messages/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = message.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -871,9 +869,9 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?) -> Void)) {
-        singlesGetWithRequestBuilder(limit: limit, page: page).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func singlesGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        singlesGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -893,18 +891,18 @@ public class DefaultAPI: APIBase {
      */
     public class func singlesGetWithRequestBuilder(limit limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
         let path = "/singles"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
             "limit": limit?.encodeToJSON(),
             "page": page?.encodeToJSON()
         ]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<[User]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
@@ -915,9 +913,9 @@ public class DefaultAPI: APIBase {
      - parameter matchUsername: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesUsernamePatch(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        singlesUsernamePatchWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func singlesUsernamePatch(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        singlesUsernamePatchWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -935,12 +933,12 @@ public class DefaultAPI: APIBase {
     public class func singlesUsernamePatchWithRequestBuilder(username username: String, matchUsername: String) -> RequestBuilder<Empty> {
         var path = "/singles/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = matchUsername.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -951,9 +949,9 @@ public class DefaultAPI: APIBase {
      - parameter matchUsername: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesUsernamePut(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        singlesUsernamePutWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func singlesUsernamePut(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        singlesUsernamePutWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -971,20 +969,19 @@ public class DefaultAPI: APIBase {
     public class func singlesUsernamePutWithRequestBuilder(username username: String, matchUsername: String) -> RequestBuilder<Empty> {
         var path = "/singles/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = matchUsername.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-
-    enum for parameter type
-    */
+     * enum for parameter type
+     */
     public enum ModelType_subscriptionsTypeDelete: String { 
         case IosPush = "ios_push"
     }
@@ -994,9 +991,9 @@ public class DefaultAPI: APIBase {
      - parameter type: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypeDelete(type type: ModelType_subscriptionsTypeDelete, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        subscriptionsTypeDeleteWithRequestBuilder(type: type).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func subscriptionsTypeDelete(type type: ModelType_subscriptionsTypeDelete, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        subscriptionsTypeDeleteWithRequestBuilder(type: type).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -1013,23 +1010,22 @@ public class DefaultAPI: APIBase {
     public class func subscriptionsTypeDeleteWithRequestBuilder(type type: ModelType_subscriptionsTypeDelete) -> RequestBuilder<Empty> {
         var path = "/subscriptions/{type}"
         path = path.stringByReplacingOccurrencesOfString("{type}", withString: "\(type.rawValue)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-
-    enum for parameter type
-    */
+     * enum for parameter type
+     */
     public enum ModelType_subscriptionsTypeGet: String { 
         case IosPush = "ios_push"
     }
@@ -1039,9 +1035,9 @@ public class DefaultAPI: APIBase {
      - parameter type: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypeGet(type type: ModelType_subscriptionsTypeGet, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        subscriptionsTypeGetWithRequestBuilder(type: type).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func subscriptionsTypeGet(type type: ModelType_subscriptionsTypeGet, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        subscriptionsTypeGetWithRequestBuilder(type: type).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -1058,23 +1054,22 @@ public class DefaultAPI: APIBase {
     public class func subscriptionsTypeGetWithRequestBuilder(type type: ModelType_subscriptionsTypeGet) -> RequestBuilder<Empty> {
         var path = "/subscriptions/{type}"
         path = path.stringByReplacingOccurrencesOfString("{type}", withString: "\(type.rawValue)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-
-    enum for parameter type
-    */
+     * enum for parameter type
+     */
     public enum ModelType_subscriptionsTypePut: String { 
         case IosPush = "ios_push"
     }
@@ -1085,9 +1080,9 @@ public class DefaultAPI: APIBase {
      - parameter metadata: (body)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypePut(type type: ModelType_subscriptionsTypePut, metadata: SubscriptionMetadata? = nil, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        subscriptionsTypePutWithRequestBuilder(type: type, metadata: metadata).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func subscriptionsTypePut(type type: ModelType_subscriptionsTypePut, metadata: SubscriptionMetadata? = nil, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        subscriptionsTypePutWithRequestBuilder(type: type, metadata: metadata).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -1105,12 +1100,12 @@ public class DefaultAPI: APIBase {
     public class func subscriptionsTypePutWithRequestBuilder(type type: ModelType_subscriptionsTypePut, metadata: SubscriptionMetadata? = nil) -> RequestBuilder<Empty> {
         var path = "/subscriptions/{type}"
         path = path.stringByReplacingOccurrencesOfString("{type}", withString: "\(type.rawValue)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = metadata?.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -1120,9 +1115,9 @@ public class DefaultAPI: APIBase {
      - parameter version: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func supportedVersionsVersionGet(version version: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        supportedVersionsVersionGetWithRequestBuilder(version: version).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func supportedVersionsVersionGet(version version: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        supportedVersionsVersionGetWithRequestBuilder(version: version).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -1139,23 +1134,22 @@ public class DefaultAPI: APIBase {
     public class func supportedVersionsVersionGetWithRequestBuilder(version version: String) -> RequestBuilder<Empty> {
         var path = "/supported-versions/{version}"
         path = path.stringByReplacingOccurrencesOfString("{version}", withString: "\(version)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
-
-    enum for parameter gender
-    */
+     * enum for parameter gender
+     */
     public enum Gender_usersGet: String { 
         case Female = "female"
         case Male = "male"
@@ -1173,9 +1167,9 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?) -> Void)) {
-        usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, forMyMatches: forMyMatches, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, forMyMatches: forMyMatches, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -1201,7 +1195,7 @@ public class DefaultAPI: APIBase {
      */
     public class func usersGetWithRequestBuilder(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
         let path = "/users"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
             "matchmaker": matchmaker,
@@ -1213,12 +1207,12 @@ public class DefaultAPI: APIBase {
             "limit": limit?.encodeToJSON(),
             "page": page?.encodeToJSON()
         ]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<[User]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
@@ -1228,9 +1222,9 @@ public class DefaultAPI: APIBase {
      - parameter userForm: (body)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersPut(userForm userForm: UserForm? = nil, completion: ((data: SessionKey?, error: ErrorType?) -> Void)) {
-        usersPutWithRequestBuilder(userForm: userForm).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func usersPut(userForm userForm: UserForm? = nil, completion: ((data: SessionKey?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        usersPutWithRequestBuilder(userForm: userForm).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -1248,12 +1242,12 @@ public class DefaultAPI: APIBase {
      */
     public class func usersPutWithRequestBuilder(userForm userForm: UserForm? = nil) -> RequestBuilder<SessionKey> {
         let path = "/users"
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = userForm?.encodeToJSON() as? [String:AnyObject]
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<SessionKey>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -1263,9 +1257,9 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersUsernameConnectionsPut(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
-        usersUsernameConnectionsPutWithRequestBuilder(username: username).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func usersUsernameConnectionsPut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        usersUsernameConnectionsPutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -1282,15 +1276,15 @@ public class DefaultAPI: APIBase {
     public class func usersUsernameConnectionsPutWithRequestBuilder(username username: String) -> RequestBuilder<Empty> {
         var path = "/users/{username}/connections"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<Empty>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
@@ -1300,9 +1294,9 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersUsernameGet(username username: String, completion: ((data: User?, error: ErrorType?) -> Void)) {
-        usersUsernameGetWithRequestBuilder(username: username).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+    public class func usersUsernameGet(username username: String, completion: ((data: User?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+        usersUsernameGetWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
+            completion(data: response?.body, error: error, headers: headers);
         }
     }
 
@@ -1319,15 +1313,15 @@ public class DefaultAPI: APIBase {
     public class func usersUsernameGetWithRequestBuilder(username username: String) -> RequestBuilder<User> {
         var path = "/users/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
-        let URLString = SwaggerClientAPI.basePath + path
+        let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
- 
+
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
-        let requestBuilder: RequestBuilder<User>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+
+        let requestBuilder: RequestBuilder<User>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }

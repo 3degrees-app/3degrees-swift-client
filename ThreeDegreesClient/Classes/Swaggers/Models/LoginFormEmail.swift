@@ -9,16 +9,16 @@ import Foundation
 
 
 public class LoginFormEmail: JSONEncodable {
-    public var password: String?
     public var emailAddress: String?
+    public var password: String?
 
     public init() {}
 
     // MARK: JSONEncodable
     func encodeToJSON() -> AnyObject {
         var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["password"] = self.password
         nillableDictionary["email_address"] = self.emailAddress
+        nillableDictionary["password"] = self.password
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
