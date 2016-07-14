@@ -202,7 +202,6 @@ class Decoders {
             }
             // Decoder for Date
             Decoders.addDecoder(clazz: Date.self) { (source: AnyObject) -> Date in
-                let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = Date()
                 return instance
             }
@@ -214,7 +213,6 @@ class Decoders {
             }
             // Decoder for DateTime
             Decoders.addDecoder(clazz: DateTime.self) { (source: AnyObject) -> DateTime in
-                let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = DateTime()
                 return instance
             }
@@ -254,7 +252,6 @@ class Decoders {
             }
             // Decoder for Empty
             Decoders.addDecoder(clazz: Empty.self) { (source: AnyObject) -> Empty in
-                let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = Empty()
                 return instance
             }
