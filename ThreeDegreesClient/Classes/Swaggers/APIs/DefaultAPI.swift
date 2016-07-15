@@ -16,7 +16,7 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func activityGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func activityGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         activityGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -66,7 +66,7 @@ public class DefaultAPI: APIBase {
      - parameter id: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func activityIdPut(id id: Int32, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func activityIdPut(id id: Int32, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         activityIdPutWithRequestBuilder(id: id).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -102,7 +102,7 @@ public class DefaultAPI: APIBase {
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authDelete(completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func authDelete(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         authDeleteWithRequestBuilder().execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -136,7 +136,7 @@ public class DefaultAPI: APIBase {
      - parameter emailAddress: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authForgotPasswordPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func authForgotPasswordPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         authForgotPasswordPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -178,7 +178,7 @@ public class DefaultAPI: APIBase {
      - parameter loginForm: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authLoginTypePut(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm, completion: ((data: SessionKey?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func authLoginTypePut(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm, completion: ((data: SessionKey?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         authLoginTypePutWithRequestBuilder(loginType: loginType, loginForm: loginForm).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -215,7 +215,7 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func connectionsUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func connectionsUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         connectionsUsernameDeleteWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -252,7 +252,7 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func connectionsUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func connectionsUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         connectionsUsernamePutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -289,7 +289,7 @@ public class DefaultAPI: APIBase {
      - parameter contentType: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func contentContentTypeGet(contentType contentType: String, completion: ((data: Content?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func contentContentTypeGet(contentType contentType: String, completion: ((data: Content?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         contentContentTypeGetWithRequestBuilder(contentType: contentType).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -329,7 +329,7 @@ public class DefaultAPI: APIBase {
      - parameter date: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesPatch(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func matchesUsernameDatesPatch(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         matchesUsernameDatesPatchWithRequestBuilder(username: username, date: date).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -365,7 +365,7 @@ public class DefaultAPI: APIBase {
      - parameter dates: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesPut(username username: String, dates: [NSDate], completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func matchesUsernameDatesPut(username username: String, dates: [NSDate], completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         matchesUsernameDatesPutWithRequestBuilder(username: username, dates: dates).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -400,7 +400,7 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func matchesUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         matchesUsernameDeleteWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -437,7 +437,7 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func matchesUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         matchesUsernamePutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -475,7 +475,7 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchmakersGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func matchmakersGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         matchmakersGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -517,7 +517,7 @@ public class DefaultAPI: APIBase {
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         meGetWithRequestBuilder().execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -551,7 +551,7 @@ public class DefaultAPI: APIBase {
      - parameter image: (form)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meImagePost(image image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func meImagePost(image image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         meImagePostWithRequestBuilder(image: image).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -590,7 +590,7 @@ public class DefaultAPI: APIBase {
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meIsSingleDelete(completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func meIsSingleDelete(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         meIsSingleDeleteWithRequestBuilder().execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -623,7 +623,7 @@ public class DefaultAPI: APIBase {
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meIsSinglePut(completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func meIsSinglePut(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         meIsSinglePutWithRequestBuilder().execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -665,7 +665,7 @@ public class DefaultAPI: APIBase {
      - parameter gender: (query)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meMatchWithPut(gender gender: Gender_meMatchWithPut? = nil, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func meMatchWithPut(gender gender: Gender_meMatchWithPut? = nil, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         meMatchWithPutWithRequestBuilder(gender: gender).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -703,7 +703,7 @@ public class DefaultAPI: APIBase {
      - parameter user: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func mePut(user user: UserForm, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func mePut(user user: UserForm, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         mePutWithRequestBuilder(user: user).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -738,7 +738,7 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernameGet(username username: String, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Message]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func messagesUsernameGet(username username: String, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Message]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         messagesUsernameGetWithRequestBuilder(username: username, limit: limit, page: page).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -790,7 +790,7 @@ public class DefaultAPI: APIBase {
      - parameter image: (form)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernameImagePost(username username: String, image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func messagesUsernameImagePost(username username: String, image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         messagesUsernameImagePostWithRequestBuilder(username: username, image: image).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -833,7 +833,7 @@ public class DefaultAPI: APIBase {
      - parameter message: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernamePut(username username: String, message: MessageForm, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func messagesUsernamePut(username username: String, message: MessageForm, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         messagesUsernamePutWithRequestBuilder(username: username, message: message).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -869,7 +869,7 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func singlesGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         singlesGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -913,7 +913,7 @@ public class DefaultAPI: APIBase {
      - parameter matchUsername: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesUsernamePatch(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func singlesUsernamePatch(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         singlesUsernamePatchWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -949,7 +949,7 @@ public class DefaultAPI: APIBase {
      - parameter matchUsername: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesUsernamePut(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func singlesUsernamePut(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         singlesUsernamePutWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -991,7 +991,7 @@ public class DefaultAPI: APIBase {
      - parameter type: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypeDelete(type type: ModelType_subscriptionsTypeDelete, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func subscriptionsTypeDelete(type type: ModelType_subscriptionsTypeDelete, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         subscriptionsTypeDeleteWithRequestBuilder(type: type).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -1035,7 +1035,7 @@ public class DefaultAPI: APIBase {
      - parameter type: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypeGet(type type: ModelType_subscriptionsTypeGet, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func subscriptionsTypeGet(type type: ModelType_subscriptionsTypeGet, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         subscriptionsTypeGetWithRequestBuilder(type: type).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -1080,7 +1080,7 @@ public class DefaultAPI: APIBase {
      - parameter metadata: (body)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypePut(type type: ModelType_subscriptionsTypePut, metadata: SubscriptionMetadata? = nil, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func subscriptionsTypePut(type type: ModelType_subscriptionsTypePut, metadata: SubscriptionMetadata? = nil, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         subscriptionsTypePutWithRequestBuilder(type: type, metadata: metadata).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -1115,7 +1115,7 @@ public class DefaultAPI: APIBase {
      - parameter version: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func supportedVersionsVersionGet(version version: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func supportedVersionsVersionGet(version version: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         supportedVersionsVersionGetWithRequestBuilder(version: version).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -1167,7 +1167,7 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, forMyMatches: forMyMatches, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -1222,7 +1222,7 @@ public class DefaultAPI: APIBase {
      - parameter userForm: (body)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersPut(userForm userForm: UserForm? = nil, completion: ((data: SessionKey?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func usersPut(userForm userForm: UserForm? = nil, completion: ((data: SessionKey?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         usersPutWithRequestBuilder(userForm: userForm).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -1257,7 +1257,7 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersUsernameConnectionsPut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func usersUsernameConnectionsPut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         usersUsernameConnectionsPutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
@@ -1294,7 +1294,7 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersUsernameGet(username username: String, completion: ((data: User?, error: ErrorType?, headers: NSDictionary) -> Void)) {
+    public class func usersUsernameGet(username username: String, completion: ((data: User?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         usersUsernameGetWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }

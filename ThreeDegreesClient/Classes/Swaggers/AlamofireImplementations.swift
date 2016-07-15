@@ -20,7 +20,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody)
     }
 
-    override func execute(completion: (response: Response<T>?, error: ErrorType?, headers: NSDictionary) -> Void) {
+    override func execute(completion: (response: Response<T>?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void) {
         let managerId = NSUUID().UUIDString
         // Create a new manager for each request to customize its request header
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -60,7 +60,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     case .Success(let upload, _, _):
                         self.processRequest(upload, managerId, completion)
                     case .Failure(let encodingError):
-                        completion(response: nil, error: ErrorResponse.Error(415, nil, encodingError), headers: NSDictionary())
+                        completion(response: nil, error: ErrorResponse.Error(415, nil, encodingError), headers: [NSObject : AnyObject]())
                     }
                 }
             )
@@ -70,7 +70,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
 
     }
 
-    private func processRequest(request: Request, _ managerId: String, _ completion: (response: Response<T>?, error: ErrorType?, headers: NSDictionary) -> Void) {
+    private func processRequest(request: Request, _ managerId: String, _ completion: (response: Response<T>?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void) {
         if let credential = self.credential {
             request.authenticate(usingCredential: credential)
         }
@@ -79,7 +79,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
             managerStore.removeValueForKey(managerId)
 
             if response.result.isFailure {
-                completion(response: nil, error: ErrorResponse.Error(response.response?.statusCode ?? 500, response.data, response.result.error!), headers: response.response?.allHeaderFields ?? NSDictionary())
+                completion(response: nil, error: ErrorResponse.Error(response.response?.statusCode ?? 500, response.data, response.result.error!), headers: response.response?.allHeaderFields ?? [NSObject : AnyObject]())
                 return
             }
 
@@ -98,7 +98,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 return
             }
 
-            completion(response: nil, error: ErrorResponse.Error(500, nil, NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])), headers: NSDictionary())
+            completion(response: nil, error: ErrorResponse.Error(500, nil, NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])), headers: [NSObject : AnyObject]())
         }
     }
 
