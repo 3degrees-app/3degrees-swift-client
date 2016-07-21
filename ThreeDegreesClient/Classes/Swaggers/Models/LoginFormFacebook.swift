@@ -9,7 +9,10 @@ import Foundation
 
 
 public class LoginFormFacebook: JSONEncodable {
+    /** Either access_token or auth_code is required. */
     public var accessToken: String?
+    /** Either access_token or auth_code is required. */
+    public var authCode: String?
 
     public init() {}
 
@@ -17,6 +20,7 @@ public class LoginFormFacebook: JSONEncodable {
     func encodeToJSON() -> AnyObject {
         var nillableDictionary = [String:AnyObject?]()
         nillableDictionary["access_token"] = self.accessToken
+        nillableDictionary["auth_code"] = self.authCode
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }

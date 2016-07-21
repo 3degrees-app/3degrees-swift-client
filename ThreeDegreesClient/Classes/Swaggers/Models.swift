@@ -336,6 +336,7 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = LoginFormFacebook()
                 instance.accessToken = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["access_token"])
+                instance.authCode = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["auth_code"])
                 return instance
             }
 
@@ -457,6 +458,7 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = UserForm()
                 instance.fbAccessToken = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["fb_access_token"])
+                instance.fbAuthCode = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["fb_auth_code"])
                 instance.user = Decoders.decodeOptional(clazz: PrivateUser.self, source: sourceDictionary["user"])
                 return instance
             }
