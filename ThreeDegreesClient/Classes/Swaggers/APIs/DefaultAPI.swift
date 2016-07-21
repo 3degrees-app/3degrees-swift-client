@@ -56,9 +56,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<[Activity]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilderClass: RequestBuilder<[Activity]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -93,9 +94,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -126,9 +128,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -159,9 +162,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -205,9 +209,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -242,9 +247,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -279,9 +285,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -318,9 +325,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Content>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Content>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -354,9 +362,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -390,9 +399,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -427,9 +437,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -464,9 +475,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -508,9 +520,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilderClass: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -541,9 +554,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<PrivateUser>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<PrivateUser>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -581,9 +595,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilderClass: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -614,9 +629,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -647,9 +663,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -693,9 +710,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: false)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -726,9 +744,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -779,9 +798,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<[Message]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilderClass: RequestBuilder<[Message]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -822,9 +842,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilderClass: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -858,9 +879,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -902,9 +924,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilderClass: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -938,9 +961,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -974,9 +998,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -1018,9 +1043,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -1062,9 +1088,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -1105,9 +1132,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -1142,9 +1170,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -1212,9 +1241,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilderClass: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -1247,9 +1277,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -1284,9 +1315,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
     /**
@@ -1321,9 +1353,10 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilder: RequestBuilder<User>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilderClass: RequestBuilder<User>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
     }
 
 }
