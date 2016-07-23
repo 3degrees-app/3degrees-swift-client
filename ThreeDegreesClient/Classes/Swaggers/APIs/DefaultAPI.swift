@@ -672,46 +672,46 @@ public class DefaultAPI: APIBase {
     /**
      * enum for parameter gender
      */
-    public enum Gender_meMatchWithPut: String { 
+    public enum Gender_meMatchWithGenderPut: String { 
+        case Any = "any"
         case Female = "female"
         case Male = "male"
     }
 
     /**
 
-     - parameter gender: (query)  (optional)
+     - parameter gender: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meMatchWithPut(gender gender: Gender_meMatchWithPut? = nil, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meMatchWithPutWithRequestBuilder(gender: gender).execute { (response, error, headers) -> Void in
+    public class func meMatchWithGenderPut(gender gender: Gender_meMatchWithGenderPut, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        meMatchWithGenderPutWithRequestBuilder(gender: gender).execute { (response, error, headers) -> Void in
             completion(data: response?.body, error: error, headers: headers);
         }
     }
 
 
     /**
-     - PUT /me/match-with
+     - PUT /me/match-with/{gender}
      - Set the gender preference that the single would like to be paired with. Set to empty string for any gender.
      - examples: [{contentType=application/json, example={ }}]
      
-     - parameter gender: (query)  (optional)
+     - parameter gender: (path)  
 
      - returns: RequestBuilder<Empty> 
      */
-    public class func meMatchWithPutWithRequestBuilder(gender gender: Gender_meMatchWithPut? = nil) -> RequestBuilder<Empty> {
-        let path = "/me/match-with"
+    public class func meMatchWithGenderPutWithRequestBuilder(gender gender: Gender_meMatchWithGenderPut) -> RequestBuilder<Empty> {
+        var path = "/me/match-with/{gender}"
+        path = path.stringByReplacingOccurrencesOfString("{gender}", withString: "\(gender.rawValue)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
 
-        let nillableParameters: [String:AnyObject?] = [
-            "gender": gender?.rawValue
-        ]
+        let nillableParameters: [String:AnyObject?] = [:]
 
         let parameters = APIHelper.rejectNil(nillableParameters)
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
         let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: false)
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
         requestBuilder.addHeaders(["Accept": "application/json"])
         return requestBuilder
     }
