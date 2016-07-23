@@ -60,6 +60,11 @@ class Decoders {
         return dictionary
     }
 
+    static func decode<T>(clazz clazz: T.Type, source: NSData) throws -> T {
+      let json = try NSJSONSerialization.JSONObjectWithData(source, options: NSJSONReadingOptions())
+      return Decoders.decode(clazz: clazz, source: json)
+    }
+
     static func decode<T>(clazz clazz: T.Type, source: AnyObject) -> T {
         initialize()
         if T.self is Int32.Type && source is NSNumber {

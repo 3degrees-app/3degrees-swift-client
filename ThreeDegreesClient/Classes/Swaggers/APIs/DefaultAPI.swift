@@ -532,27 +532,17 @@ public class DefaultAPI: APIBase {
      */
     public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         meGetWithRequestBuilder().execute { (response, rawError, headers) -> Void in
-          var err: ErrorType?
-          if let e = rawError {
-            switch e {
-            case let .RawError(400, data, _):
-              do {
-                  let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
-                  let body = Decoders.decode(clazz: Error.self, source: json)
-                  err = ErrorResponse.MeGet400(body)
-              } catch {
-                  err = error
+          var err: ErrorType? = nil
+          do {
+            if let e = rawError {
+              switch e {
+                case let .RawError(400, data, _): err = ErrorResponse.MeGet400(try Decoders.decode(clazz: Error.self, source: data!))
+                case let .RawError(403, data, _): err = ErrorResponse.MeGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                default: err = e
               }
-            case let .RawError(403, data, _):
-              do {
-                  let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
-                  let body = Decoders.decode(clazz: Error.self, source: json)
-                  err = ErrorResponse.MeGet403(body)
-              } catch {
-                  err = error
-              }
-            default: err = e
             }
+          } catch {
+              err = error
           }
           completion(data: response?.body, error: err, headers: headers);
         }
