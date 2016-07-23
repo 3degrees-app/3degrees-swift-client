@@ -11,7 +11,9 @@ protocol JSONEncodable {
 }
 
 public enum ErrorResponse : ErrorType {
-    case Error(Int, NSData?, ErrorType)
+    case RawError(Int, NSData?, ErrorType)
+    case MeGet400(Error)
+    case MeGet403(Error)
 }
 
 public class Response<T> {

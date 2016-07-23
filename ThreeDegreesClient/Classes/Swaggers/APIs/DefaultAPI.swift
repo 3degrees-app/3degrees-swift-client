@@ -531,8 +531,30 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meGetWithRequestBuilder().execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        meGetWithRequestBuilder().execute { (response, rawError, headers) -> Void in
+          var err: ErrorType?
+          if let e = rawError {
+            switch e {
+            case let .RawError(400, data, _):
+              do {
+                  let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
+                  let body = Decoders.decode(clazz: Error.self, source: json)
+                  err = ErrorResponse.MeGet400(body)
+              } catch {
+                  err = error
+              }
+            case let .RawError(403, data, _):
+              do {
+                  let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
+                  let body = Decoders.decode(clazz: Error.self, source: json)
+                  err = ErrorResponse.MeGet403(body)
+              } catch {
+                  err = error
+              }
+            default: err = e
+            }
+          }
+          completion(data: response?.body, error: err, headers: headers);
         }
     }
 
