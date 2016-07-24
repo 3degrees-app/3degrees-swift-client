@@ -12,8 +12,68 @@ protocol JSONEncodable {
 
 public enum ErrorResponse : ErrorType {
     case RawError(Int, NSData?, ErrorType)
-    case MeGet400(Error)
-    case MeGet403(Error)
+    case activityGet403(Error)
+    case activityIdPut403(Error)
+    case activityIdPut404(Error)
+    case authDelete403(Error)
+    case authForgotPasswordPut404(Error)
+    case authLoginTypePut403(Error)
+    case connectionsUsernameDelete403(Error)
+    case connectionsUsernamePut403(Error)
+    case connectionsUsernamePut404(Error)
+    case contentContentTypeGet404(Error)
+    case matchesUsernameDatesPatch403(Error)
+    case matchesUsernameDatesPatch404(Error)
+    case matchesUsernameDatesPut403(Error)
+    case matchesUsernameDatesPut404(Error)
+    case matchesUsernameDelete403(Error)
+    case matchesUsernamePut301(Empty)
+    case matchesUsernamePut403(Error)
+    case matchesUsernamePut404(Error)
+    case matchmakersGet403(Error)
+    case meGet400(Error)
+    case meGet403(Error)
+    case meImagePost400(Error)
+    case meImagePost403(Error)
+    case meImagePost413(Error)
+    case meIsSingleDelete400(Error)
+    case meIsSingleDelete403(Error)
+    case meIsSinglePut400(Error)
+    case meIsSinglePut403(Error)
+    case meMatchWithGenderPut400(Error)
+    case meMatchWithGenderPut403(Error)
+    case mePut400(Error)
+    case mePut403(Error)
+    case messagesUsernameGet403(Error)
+    case messagesUsernameGet404(Error)
+    case messagesUsernameImagePost400(Error)
+    case messagesUsernameImagePost403(Error)
+    case messagesUsernameImagePost413(Error)
+    case messagesUsernamePut403(Error)
+    case messagesUsernamePut404(Error)
+    case singlesGet403(Error)
+    case singlesUsernamePatch400(Error)
+    case singlesUsernamePatch403(Error)
+    case singlesUsernamePatch404(Error)
+    case singlesUsernamePut400(Error)
+    case singlesUsernamePut403(Error)
+    case singlesUsernamePut404(Error)
+    case subscriptionsTypeDelete400(Error)
+    case subscriptionsTypeDelete403(Error)
+    case subscriptionsTypeDelete404(Error)
+    case subscriptionsTypeGet400(Error)
+    case subscriptionsTypeGet403(Error)
+    case subscriptionsTypeGet404(Error)
+    case subscriptionsTypePut400(Error)
+    case subscriptionsTypePut403(Error)
+    case subscriptionsTypePut404(Error)
+    case supportedVersionsVersionGet404(Error)
+    case usersGet403(Error)
+    case usersPut400(Error)
+    case usersPut403(Error)
+    case usersUsernameConnectionsPut403(Error)
+    case usersUsernameConnectionsPut404(Error)
+    case usersUsernameGet404(Error)
 }
 
 public class Response<T> {
@@ -61,8 +121,8 @@ class Decoders {
     }
 
     static func decode<T>(clazz clazz: T.Type, source: NSData) throws -> T {
-      let json = try NSJSONSerialization.JSONObjectWithData(source, options: NSJSONReadingOptions())
-      return Decoders.decode(clazz: clazz, source: json)
+        let json = try NSJSONSerialization.JSONObjectWithData(source, options: NSJSONReadingOptions())
+        return Decoders.decode(clazz: clazz, source: json)
     }
 
     static func decode<T>(clazz clazz: T.Type, source: AnyObject) -> T {
@@ -73,8 +133,14 @@ class Decoders {
         if T.self is Int64.Type && source is NSNumber {
             return source.longLongValue as! T;
         }
+        if T.self is NSUUID.Type && source is String {
+            return NSUUID(UUIDString: source as! String) as! T
+        }
         if source is T {
             return source as! T
+        }
+        if T.self is NSData.Type && source is String {
+            return NSData(base64EncodedString: source as! String, options: NSDataBase64DecodingOptions()) as! T
         }
 
         let key = "\(T.self)"
@@ -209,6 +275,7 @@ class Decoders {
             }
             // Decoder for Date
             Decoders.addDecoder(clazz: Date.self) { (source: AnyObject) -> Date in
+                let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = Date()
                 return instance
             }
@@ -220,6 +287,7 @@ class Decoders {
             }
             // Decoder for DateTime
             Decoders.addDecoder(clazz: DateTime.self) { (source: AnyObject) -> DateTime in
+                let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = DateTime()
                 return instance
             }
@@ -259,6 +327,7 @@ class Decoders {
             }
             // Decoder for Empty
             Decoders.addDecoder(clazz: Empty.self) { (source: AnyObject) -> Empty in
+                let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = Empty()
                 return instance
             }

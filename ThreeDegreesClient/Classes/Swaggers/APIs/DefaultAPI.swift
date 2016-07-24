@@ -16,9 +16,20 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func activityGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        activityGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func activityGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?) -> Void)) {
+        activityGetWithRequestBuilder(limit: limit, page: page).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.activityGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -56,10 +67,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<[Activity]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<[Activity]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
     /**
@@ -67,9 +77,21 @@ public class DefaultAPI: APIBase {
      - parameter id: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func activityIdPut(id id: Int32, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        activityIdPutWithRequestBuilder(id: id).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func activityIdPut(id id: Int32, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        activityIdPutWithRequestBuilder(id: id).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.activityIdPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.activityIdPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -94,19 +116,29 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authDelete(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        authDeleteWithRequestBuilder().execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func authDelete(completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        authDeleteWithRequestBuilder().execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.authDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -128,10 +160,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -139,9 +170,20 @@ public class DefaultAPI: APIBase {
      - parameter emailAddress: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authForgotPasswordPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        authForgotPasswordPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func authForgotPasswordPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        authForgotPasswordPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.authForgotPasswordPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -162,10 +204,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -182,9 +223,20 @@ public class DefaultAPI: APIBase {
      - parameter loginForm: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authLoginTypePut(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm, completion: ((data: SessionKey?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        authLoginTypePutWithRequestBuilder(loginType: loginType, loginForm: loginForm).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func authLoginTypePut(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm, completion: ((data: SessionKey?, error: ErrorType?) -> Void)) {
+        authLoginTypePutWithRequestBuilder(loginType: loginType, loginForm: loginForm).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.authLoginTypePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -209,10 +261,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -220,9 +271,20 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func connectionsUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        connectionsUsernameDeleteWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func connectionsUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        connectionsUsernameDeleteWithRequestBuilder(username: username).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.connectionsUsernameDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -247,10 +309,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -258,9 +319,21 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func connectionsUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        connectionsUsernamePutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func connectionsUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        connectionsUsernamePutWithRequestBuilder(username: username).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.connectionsUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.connectionsUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -285,10 +358,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -296,9 +368,20 @@ public class DefaultAPI: APIBase {
      - parameter contentType: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func contentContentTypeGet(contentType contentType: String, completion: ((data: Content?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        contentContentTypeGetWithRequestBuilder(contentType: contentType).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func contentContentTypeGet(contentType contentType: String, completion: ((data: Content?, error: ErrorType?) -> Void)) {
+        contentContentTypeGetWithRequestBuilder(contentType: contentType).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.contentContentTypeGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -325,10 +408,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Content>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Content>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -337,9 +419,21 @@ public class DefaultAPI: APIBase {
      - parameter date: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesPatch(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernameDatesPatchWithRequestBuilder(username: username, date: date).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func matchesUsernameDatesPatch(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        matchesUsernameDatesPatchWithRequestBuilder(username: username, date: date).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDatesPatch403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernameDatesPatch404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -362,10 +456,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -374,9 +467,21 @@ public class DefaultAPI: APIBase {
      - parameter dates: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesPut(username username: String, dates: [NSDate], completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernameDatesPutWithRequestBuilder(username: username, dates: dates).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func matchesUsernameDatesPut(username username: String, dates: [NSDate], completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        matchesUsernameDatesPutWithRequestBuilder(username: username, dates: dates).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDatesPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernameDatesPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -399,10 +504,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -410,9 +514,20 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernameDeleteWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func matchesUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        matchesUsernameDeleteWithRequestBuilder(username: username).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -437,10 +552,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -448,9 +562,22 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernamePutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func matchesUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        matchesUsernamePutWithRequestBuilder(username: username).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(301, data, _): err = ErrorResponse.matchesUsernamePut301(try Decoders.decode(clazz: Empty.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -475,10 +602,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -487,9 +613,20 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchmakersGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchmakersGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func matchmakersGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?) -> Void)) {
+        matchmakersGetWithRequestBuilder(limit: limit, page: page).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchmakersGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -520,31 +657,30 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
     /**
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meGetWithRequestBuilder().execute { (response, rawError, headers) -> Void in
-          var err: ErrorType? = nil
-          do {
-            if let e = rawError {
-              switch e {
-                case let .RawError(400, data, _): err = ErrorResponse.MeGet400(try Decoders.decode(clazz: Error.self, source: data!))
-                case let .RawError(403, data, _): err = ErrorResponse.MeGet403(try Decoders.decode(clazz: Error.self, source: data!))
-                default: err = e
-              }
+    public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?) -> Void)) {
+        meGetWithRequestBuilder().execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meGet400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
             }
-          } catch {
-              err = error
-          }
-          completion(data: response?.body, error: err, headers: headers);
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -566,10 +702,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<PrivateUser>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<PrivateUser>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -577,9 +712,22 @@ public class DefaultAPI: APIBase {
      - parameter image: (form)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meImagePost(image image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meImagePostWithRequestBuilder(image: image).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func meImagePost(image image: NSURL, completion: ((data: Image?, error: ErrorType?) -> Void)) {
+        meImagePostWithRequestBuilder(image: image).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meImagePost400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meImagePost403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(413, data, _): err = ErrorResponse.meImagePost413(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -607,19 +755,30 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
     /**
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meIsSingleDelete(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meIsSingleDeleteWithRequestBuilder().execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func meIsSingleDelete(completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        meIsSingleDeleteWithRequestBuilder().execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meIsSingleDelete400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meIsSingleDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -641,19 +800,30 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meIsSinglePut(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meIsSinglePutWithRequestBuilder().execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func meIsSinglePut(completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        meIsSinglePutWithRequestBuilder().execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meIsSinglePut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meIsSinglePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -675,57 +845,67 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
      * enum for parameter gender
      */
-    public enum Gender_meMatchWithPut: String { 
+    public enum Gender_meMatchWithGenderPut: String { 
+        case Any = "any"
         case Female = "female"
         case Male = "male"
     }
 
     /**
 
-     - parameter gender: (query)  (optional)
+     - parameter gender: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meMatchWithPut(gender gender: Gender_meMatchWithPut? = nil, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meMatchWithPutWithRequestBuilder(gender: gender).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func meMatchWithGenderPut(gender gender: Gender_meMatchWithGenderPut, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        meMatchWithGenderPutWithRequestBuilder(gender: gender).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meMatchWithGenderPut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meMatchWithGenderPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
 
     /**
-     - PUT /me/match-with
+     - PUT /me/match-with/{gender}
      - Set the gender preference that the single would like to be paired with. Set to empty string for any gender.
      - examples: [{contentType=application/json, example={ }}]
      
-     - parameter gender: (query)  (optional)
+     - parameter gender: (path)  
 
      - returns: RequestBuilder<Empty> 
      */
-    public class func meMatchWithPutWithRequestBuilder(gender gender: Gender_meMatchWithPut? = nil) -> RequestBuilder<Empty> {
-        let path = "/me/match-with"
+    public class func meMatchWithGenderPutWithRequestBuilder(gender gender: Gender_meMatchWithGenderPut) -> RequestBuilder<Empty> {
+        var path = "/me/match-with/{gender}"
+        path = path.stringByReplacingOccurrencesOfString("{gender}", withString: "\(gender.rawValue)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
 
-        let nillableParameters: [String:AnyObject?] = [
-            "gender": gender?.rawValue
-        ]
+        let nillableParameters: [String:AnyObject?] = [:]
 
         let parameters = APIHelper.rejectNil(nillableParameters)
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: false)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -733,9 +913,21 @@ public class DefaultAPI: APIBase {
      - parameter user: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func mePut(user user: UserForm, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        mePutWithRequestBuilder(user: user).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func mePut(user user: UserForm, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        mePutWithRequestBuilder(user: user).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.mePut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.mePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -756,10 +948,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -769,9 +960,21 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernameGet(username username: String, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Message]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        messagesUsernameGetWithRequestBuilder(username: username, limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func messagesUsernameGet(username username: String, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Message]?, error: ErrorType?) -> Void)) {
+        messagesUsernameGetWithRequestBuilder(username: username, limit: limit, page: page).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.messagesUsernameGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.messagesUsernameGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -810,10 +1013,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<[Message]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<[Message]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
     /**
@@ -822,9 +1024,22 @@ public class DefaultAPI: APIBase {
      - parameter image: (form)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernameImagePost(username username: String, image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        messagesUsernameImagePostWithRequestBuilder(username: username, image: image).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func messagesUsernameImagePost(username username: String, image: NSURL, completion: ((data: Image?, error: ErrorType?) -> Void)) {
+        messagesUsernameImagePostWithRequestBuilder(username: username, image: image).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.messagesUsernameImagePost400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.messagesUsernameImagePost403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(413, data, _): err = ErrorResponse.messagesUsernameImagePost413(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -854,10 +1069,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Image>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
     /**
@@ -866,9 +1080,21 @@ public class DefaultAPI: APIBase {
      - parameter message: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernamePut(username username: String, message: MessageForm, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        messagesUsernamePutWithRequestBuilder(username: username, message: message).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func messagesUsernamePut(username username: String, message: MessageForm, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        messagesUsernamePutWithRequestBuilder(username: username, message: message).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.messagesUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.messagesUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -891,10 +1117,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -903,9 +1128,20 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        singlesGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func singlesGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?) -> Void)) {
+        singlesGetWithRequestBuilder(limit: limit, page: page).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.singlesGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -936,10 +1172,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
     /**
@@ -948,9 +1183,22 @@ public class DefaultAPI: APIBase {
      - parameter matchUsername: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesUsernamePatch(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        singlesUsernamePatchWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func singlesUsernamePatch(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        singlesUsernamePatchWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.singlesUsernamePatch400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.singlesUsernamePatch403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.singlesUsernamePatch404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -973,10 +1221,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -985,9 +1232,22 @@ public class DefaultAPI: APIBase {
      - parameter matchUsername: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesUsernamePut(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        singlesUsernamePutWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func singlesUsernamePut(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        singlesUsernamePutWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.singlesUsernamePut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.singlesUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.singlesUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1010,10 +1270,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -1028,9 +1287,22 @@ public class DefaultAPI: APIBase {
      - parameter type: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypeDelete(type type: ModelType_subscriptionsTypeDelete, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        subscriptionsTypeDeleteWithRequestBuilder(type: type).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func subscriptionsTypeDelete(type type: ModelType_subscriptionsTypeDelete, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        subscriptionsTypeDeleteWithRequestBuilder(type: type).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.subscriptionsTypeDelete400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.subscriptionsTypeDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.subscriptionsTypeDelete404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1055,10 +1327,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -1073,9 +1344,22 @@ public class DefaultAPI: APIBase {
      - parameter type: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypeGet(type type: ModelType_subscriptionsTypeGet, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        subscriptionsTypeGetWithRequestBuilder(type: type).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func subscriptionsTypeGet(type type: ModelType_subscriptionsTypeGet, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        subscriptionsTypeGetWithRequestBuilder(type: type).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.subscriptionsTypeGet400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.subscriptionsTypeGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.subscriptionsTypeGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1100,10 +1384,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -1119,9 +1402,22 @@ public class DefaultAPI: APIBase {
      - parameter metadata: (body)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func subscriptionsTypePut(type type: ModelType_subscriptionsTypePut, metadata: SubscriptionMetadata? = nil, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        subscriptionsTypePutWithRequestBuilder(type: type, metadata: metadata).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func subscriptionsTypePut(type type: ModelType_subscriptionsTypePut, metadata: SubscriptionMetadata? = nil, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        subscriptionsTypePutWithRequestBuilder(type: type, metadata: metadata).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.subscriptionsTypePut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.subscriptionsTypePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.subscriptionsTypePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1144,10 +1440,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -1155,9 +1450,20 @@ public class DefaultAPI: APIBase {
      - parameter version: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func supportedVersionsVersionGet(version version: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        supportedVersionsVersionGetWithRequestBuilder(version: version).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func supportedVersionsVersionGet(version version: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        supportedVersionsVersionGetWithRequestBuilder(version: version).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.supportedVersionsVersionGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1182,10 +1488,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -1208,9 +1513,20 @@ public class DefaultAPI: APIBase {
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, forMyMatches: forMyMatches, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?) -> Void)) {
+        usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, forMyMatches: forMyMatches, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.usersGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1253,10 +1569,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<[User]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
     }
 
     /**
@@ -1264,9 +1579,21 @@ public class DefaultAPI: APIBase {
      - parameter userForm: (body)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersPut(userForm userForm: UserForm? = nil, completion: ((data: SessionKey?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersPutWithRequestBuilder(userForm: userForm).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func usersPut(userForm userForm: UserForm? = nil, completion: ((data: SessionKey?, error: ErrorType?) -> Void)) {
+        usersPutWithRequestBuilder(userForm: userForm).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.usersPut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.usersPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1289,10 +1616,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -1300,9 +1626,21 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersUsernameConnectionsPut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersUsernameConnectionsPutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func usersUsernameConnectionsPut(username username: String, completion: ((data: Empty?, error: ErrorType?) -> Void)) {
+        usersUsernameConnectionsPutWithRequestBuilder(username: username).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.usersUsernameConnectionsPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.usersUsernameConnectionsPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1327,10 +1665,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -1338,9 +1675,20 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersUsernameGet(username username: String, completion: ((data: User?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersUsernameGetWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+    public class func usersUsernameGet(username username: String, completion: ((data: User?, error: ErrorType?) -> Void)) {
+        usersUsernameGetWithRequestBuilder(username: username).execute { (response, rawError) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.usersUsernameGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err);
         }
     }
 
@@ -1365,10 +1713,9 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<User>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
-        requestBuilder.addHeaders(["Accept": "application/json"])
-        return requestBuilder
+        let requestBuilder: RequestBuilder<User>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
 }

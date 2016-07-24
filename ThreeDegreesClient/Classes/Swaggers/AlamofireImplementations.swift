@@ -20,7 +20,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody)
     }
 
-    override func execute(completion: (response: Response<T>?, error: ErrorResponse?, headers: Dictionary<NSObject, AnyObject>) -> Void) {
+    override func execute(completion: (response: Response<T>?, error: ErrorResponse?) -> Void) {
         let managerId = NSUUID().UUIDString
         // Create a new manager for each request to customize its request header
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -57,48 +57,84 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 encodingMemoryThreshold: Manager.MultipartFormDataEncodingMemoryThreshold,
                 encodingCompletion: { encodingResult in
                     switch encodingResult {
-                    case .Success(let upload, _, _):
-                        self.processRequest(upload, managerId, completion)
+                    case .Success(let uploadRequest, _, _):
+                        if let onProgressReady = self.onProgressReady {
+                            onProgressReady(uploadRequest.progress)
+                        }
+                        self.processRequest(uploadRequest, managerId, completion)
                     case .Failure(let encodingError):
-                        completion(response: nil, error: ErrorResponse.RawError(415, nil, encodingError), headers: [NSObject : AnyObject]())
+                        completion(response: nil, error: ErrorResponse.RawError(415, nil, encodingError))
                     }
                 }
             )
         } else {
-            processRequest(manager.request(xMethod!, URLString, parameters: parameters, encoding: encoding), managerId, completion)
+            let request = manager.request(xMethod!, URLString, parameters: parameters, encoding: encoding)
+            if let onProgressReady = self.onProgressReady {
+                onProgressReady(request.progress)
+            }
+            processRequest(request, managerId, completion)
         }
 
     }
 
-    private func processRequest(request: Request, _ managerId: String, _ completion: (response: Response<T>?, error: ErrorResponse?, headers: Dictionary<NSObject, AnyObject>) -> Void) {
+    private func processRequest(request: Request, _ managerId: String, _ completion: (response: Response<T>?, error: ErrorResponse?) -> Void) {
         if let credential = self.credential {
             request.authenticate(usingCredential: credential)
         }
 
-        request.validate().responseJSON(options: .AllowFragments) { response in
+        let cleanupRequest = {
             managerStore.removeValueForKey(managerId)
+        }
 
-            if response.result.isFailure {
-                completion(response: nil, error: ErrorResponse.RawError(response.response?.statusCode ?? 500, response.data, response.result.error!), headers: response.response?.allHeaderFields ?? [NSObject : AnyObject]())
-                return
-            }
+        let validatedRequest = request.validate()
 
-            if () is T {
-                completion(response: Response(response: response.response!, body: () as! T), error: nil, headers: response.response!.allHeaderFields)
-                return
-            }
-            if let json: AnyObject = response.result.value {
-                let body = Decoders.decode(clazz: T.self, source: json)
-                completion(response: Response(response: response.response!, body: body), error: nil, headers: response.response!.allHeaderFields)
-                return
-            } else if "" is T {
-                // swagger-parser currently doesn't support void, which will be fixed in future swagger-parser release
-                // https://github.com/swagger-api/swagger-parser/pull/34
-                completion(response: Response(response: response.response!, body: "" as! T), error: nil, headers: response.response!.allHeaderFields)
-                return
-            }
+        switch T.self {
+        case is NSData.Type:
+            validatedRequest.responseData({ (dataResponse) in
+                cleanupRequest()
 
-            completion(response: nil, error: ErrorResponse.RawError(500, nil, NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])), headers: [NSObject : AnyObject]())
+                if (dataResponse.result.isFailure) {
+                    completion(
+                        response: nil,
+                        error: ErrorResponse.RawError(dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!)
+                    )
+                    return
+                }
+
+                completion(
+                    response: Response(
+                        response: dataResponse.response!,
+                        body: dataResponse.data as! T
+                    ),
+                    error: nil
+                )
+            })
+        default:
+            validatedRequest.responseJSON(options: .AllowFragments) { response in
+                cleanupRequest()
+
+                if response.result.isFailure {
+                    completion(response: nil, error: ErrorResponse.RawError(response.response?.statusCode ?? 500, response.data, response.result.error!))
+                    return
+                }
+
+                if () is T {
+                    completion(response: Response(response: response.response!, body: () as! T), error: nil)
+                    return
+                }
+                if let json: AnyObject = response.result.value {
+                    let body = Decoders.decode(clazz: T.self, source: json)
+                    completion(response: Response(response: response.response!, body: body), error: nil)
+                    return
+                } else if "" is T {
+                    // swagger-parser currently doesn't support void, which will be fixed in future swagger-parser release
+                    // https://github.com/swagger-api/swagger-parser/pull/34
+                    completion(response: Response(response: response.response!, body: "" as! T), error: nil)
+                    return
+                }
+
+                completion(response: nil, error: ErrorResponse.RawError(500, nil, NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])))
+            }
         }
     }
 
