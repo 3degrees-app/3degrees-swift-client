@@ -37,6 +37,9 @@ public class RequestBuilder<T> {
     let method: String
     let URLString: String
 
+    /// Optional block to obtain a reference to the request's progress instance when available.
+    public var onProgressReady: ((NSProgress) -> ())?
+
     required public init(method: String, URLString: String, parameters: [String:AnyObject]?, isBody: Bool) {
         self.method = method
         self.URLString = URLString
@@ -52,7 +55,7 @@ public class RequestBuilder<T> {
         }
     }
 
-    public func execute(completion: (response: Response<T>?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void) { }
+    public func execute(completion: (response: Response<T>?, error: ErrorResponse?, headers: Dictionary<NSObject, AnyObject>) -> Void) { }
 
     public func addHeader(name name: String, value: String) -> Self {
         if !value.isEmpty {

@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.9'
   s.version = '0.0.10'
   s.source = { :git => 'git@github.com:swagger-api/swagger-mustache.git', :tag => 'v1.0.0' }
-  s.authors = {'Ryan Martin' => 'rlmartin@gmail.com'}
+  s.authors = 'rlmartin@gmail.com'
   s.license = 'Apache License, Version 2.0'
   s.homepage = 'https://api.threedegreesapp.com'
   s.summary = 'Generated client'

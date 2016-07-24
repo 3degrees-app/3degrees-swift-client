@@ -17,8 +17,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func activityGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        activityGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        activityGetWithRequestBuilder(limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.activityGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -68,8 +79,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func activityIdPut(id id: Int32, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        activityIdPutWithRequestBuilder(id: id).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        activityIdPutWithRequestBuilder(id: id).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.activityIdPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.activityIdPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -105,8 +128,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func authDelete(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        authDeleteWithRequestBuilder().execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        authDeleteWithRequestBuilder().execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.authDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -140,8 +174,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func authForgotPasswordPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        authForgotPasswordPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        authForgotPasswordPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.authForgotPasswordPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -183,8 +228,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func authLoginTypePut(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm, completion: ((data: SessionKey?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        authLoginTypePutWithRequestBuilder(loginType: loginType, loginForm: loginForm).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        authLoginTypePutWithRequestBuilder(loginType: loginType, loginForm: loginForm).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.authLoginTypePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -221,8 +277,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func connectionsUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        connectionsUsernameDeleteWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        connectionsUsernameDeleteWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.connectionsUsernameDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -259,8 +326,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func connectionsUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        connectionsUsernamePutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        connectionsUsernamePutWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.connectionsUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.connectionsUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -297,8 +376,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func contentContentTypeGet(contentType contentType: String, completion: ((data: Content?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        contentContentTypeGetWithRequestBuilder(contentType: contentType).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        contentContentTypeGetWithRequestBuilder(contentType: contentType).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.contentContentTypeGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -338,8 +428,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func matchesUsernameDatesPatch(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernameDatesPatchWithRequestBuilder(username: username, date: date).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        matchesUsernameDatesPatchWithRequestBuilder(username: username, date: date).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDatesPatch403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernameDatesPatch404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -375,8 +477,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func matchesUsernameDatesPut(username username: String, dates: [NSDate], completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernameDatesPutWithRequestBuilder(username: username, dates: dates).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        matchesUsernameDatesPutWithRequestBuilder(username: username, dates: dates).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDatesPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernameDatesPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -411,8 +525,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func matchesUsernameDelete(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernameDeleteWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        matchesUsernameDeleteWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -449,8 +574,21 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func matchesUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernamePutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        matchesUsernamePutWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(301, data, _): err = ErrorResponse.matchesUsernamePut301(try Decoders.decode(clazz: Empty.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -488,8 +626,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func matchmakersGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchmakersGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        matchmakersGetWithRequestBuilder(limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchmakersGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -531,8 +680,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func meGet(completion: ((data: PrivateUser?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meGetWithRequestBuilder().execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        meGetWithRequestBuilder().execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meGet400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -566,8 +727,21 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func meImagePost(image image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meImagePostWithRequestBuilder(image: image).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        meImagePostWithRequestBuilder(image: image).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meImagePost400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meImagePost403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(413, data, _): err = ErrorResponse.meImagePost413(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -606,8 +780,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func meIsSingleDelete(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meIsSingleDeleteWithRequestBuilder().execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        meIsSingleDeleteWithRequestBuilder().execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meIsSingleDelete400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meIsSingleDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -640,8 +826,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func meIsSinglePut(completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meIsSinglePutWithRequestBuilder().execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        meIsSinglePutWithRequestBuilder().execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meIsSinglePut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meIsSinglePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -684,8 +882,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func meMatchWithGenderPut(gender gender: Gender_meMatchWithGenderPut, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        meMatchWithGenderPutWithRequestBuilder(gender: gender).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        meMatchWithGenderPutWithRequestBuilder(gender: gender).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.meMatchWithGenderPut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.meMatchWithGenderPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -722,8 +932,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func mePut(user user: UserForm, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        mePutWithRequestBuilder(user: user).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        mePutWithRequestBuilder(user: user).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.mePut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.mePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -758,8 +980,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func messagesUsernameGet(username username: String, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Message]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        messagesUsernameGetWithRequestBuilder(username: username, limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        messagesUsernameGetWithRequestBuilder(username: username, limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.messagesUsernameGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.messagesUsernameGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -811,8 +1045,21 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func messagesUsernameImagePost(username username: String, image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        messagesUsernameImagePostWithRequestBuilder(username: username, image: image).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        messagesUsernameImagePostWithRequestBuilder(username: username, image: image).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.messagesUsernameImagePost400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.messagesUsernameImagePost403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(413, data, _): err = ErrorResponse.messagesUsernameImagePost413(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -855,8 +1102,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func messagesUsernamePut(username username: String, message: MessageForm, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        messagesUsernamePutWithRequestBuilder(username: username, message: message).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        messagesUsernamePutWithRequestBuilder(username: username, message: message).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.messagesUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.messagesUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -892,8 +1151,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func singlesGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        singlesGetWithRequestBuilder(limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        singlesGetWithRequestBuilder(limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.singlesGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -937,8 +1207,21 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func singlesUsernamePatch(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        singlesUsernamePatchWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        singlesUsernamePatchWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.singlesUsernamePatch400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.singlesUsernamePatch403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.singlesUsernamePatch404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -974,8 +1257,21 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func singlesUsernamePut(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        singlesUsernamePutWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        singlesUsernamePutWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.singlesUsernamePut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.singlesUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.singlesUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -1017,8 +1313,21 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func subscriptionsTypeDelete(type type: ModelType_subscriptionsTypeDelete, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        subscriptionsTypeDeleteWithRequestBuilder(type: type).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        subscriptionsTypeDeleteWithRequestBuilder(type: type).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.subscriptionsTypeDelete400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.subscriptionsTypeDelete403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.subscriptionsTypeDelete404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -1062,8 +1371,21 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func subscriptionsTypeGet(type type: ModelType_subscriptionsTypeGet, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        subscriptionsTypeGetWithRequestBuilder(type: type).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        subscriptionsTypeGetWithRequestBuilder(type: type).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.subscriptionsTypeGet400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.subscriptionsTypeGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.subscriptionsTypeGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -1108,8 +1430,21 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func subscriptionsTypePut(type type: ModelType_subscriptionsTypePut, metadata: SubscriptionMetadata? = nil, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        subscriptionsTypePutWithRequestBuilder(type: type, metadata: metadata).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        subscriptionsTypePutWithRequestBuilder(type: type, metadata: metadata).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.subscriptionsTypePut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.subscriptionsTypePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.subscriptionsTypePut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -1144,8 +1479,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func supportedVersionsVersionGet(version version: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        supportedVersionsVersionGetWithRequestBuilder(version: version).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        supportedVersionsVersionGetWithRequestBuilder(version: version).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.supportedVersionsVersionGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -1197,8 +1543,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, forMyMatches: forMyMatches, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, forMyMatches: forMyMatches, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.usersGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -1253,8 +1610,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func usersPut(userForm userForm: UserForm? = nil, completion: ((data: SessionKey?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersPutWithRequestBuilder(userForm: userForm).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        usersPutWithRequestBuilder(userForm: userForm).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.usersPut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.usersPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -1289,8 +1658,20 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func usersUsernameConnectionsPut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersUsernameConnectionsPutWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        usersUsernameConnectionsPutWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.usersUsernameConnectionsPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.usersUsernameConnectionsPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
@@ -1327,8 +1708,19 @@ public class DefaultAPI: APIBase {
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func usersUsernameGet(username username: String, completion: ((data: User?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersUsernameGetWithRequestBuilder(username: username).execute { (response, error, headers) -> Void in
-            completion(data: response?.body, error: error, headers: headers);
+        usersUsernameGetWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.usersUsernameGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
         }
     }
 
