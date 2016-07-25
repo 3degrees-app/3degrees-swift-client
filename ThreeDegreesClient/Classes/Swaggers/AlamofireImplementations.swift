@@ -39,6 +39,9 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 multipartFormData: { mpForm in
                     for (k, v) in self.parameters! {
                         switch v {
+                        case let fileUpload as FileUpload:
+                            mpForm.appendBodyPart(data: fileUpload.body, name: k, fileName: fileUpload.fileName, mimeType: fileUpload.mimeType)
+                            break
                         case let fileURL as NSURL:
                             mpForm.appendBodyPart(fileURL: fileURL, name: k)
                             break

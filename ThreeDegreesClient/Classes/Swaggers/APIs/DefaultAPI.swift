@@ -726,7 +726,7 @@ public class DefaultAPI: APIBase {
      - parameter image: (form)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func meImagePost(image image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+    public class func meImagePost(image image: FileUpload, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         meImagePostWithRequestBuilder(image: image).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
@@ -757,7 +757,7 @@ public class DefaultAPI: APIBase {
 
      - returns: RequestBuilder<Image> 
      */
-    public class func meImagePostWithRequestBuilder(image image: NSURL) -> RequestBuilder<Image> {
+    public class func meImagePostWithRequestBuilder(image image: FileUpload) -> RequestBuilder<Image> {
         let path = "/me/image"
         let URLString = ThreeDegreesClientAPI.basePath + path
 
@@ -1044,7 +1044,7 @@ public class DefaultAPI: APIBase {
      - parameter image: (form)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func messagesUsernameImagePost(username username: String, image: NSURL, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+    public class func messagesUsernameImagePost(username username: String, image: FileUpload, completion: ((data: Image?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         messagesUsernameImagePostWithRequestBuilder(username: username, image: image).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
@@ -1076,7 +1076,7 @@ public class DefaultAPI: APIBase {
 
      - returns: RequestBuilder<Image> 
      */
-    public class func messagesUsernameImagePostWithRequestBuilder(username username: String, image: NSURL) -> RequestBuilder<Image> {
+    public class func messagesUsernameImagePostWithRequestBuilder(username username: String, image: FileUpload) -> RequestBuilder<Image> {
         var path = "/messages/{username}/image"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path

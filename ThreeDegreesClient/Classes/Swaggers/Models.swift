@@ -76,6 +76,18 @@ public enum ErrorResponse : ErrorType {
     case usersUsernameGet404(Error)
 }
 
+public class FileUpload {
+    public let body: NSData
+    public let fileName: String
+    public let mimeType: String
+
+    public init(body: NSData, fileName: String, mimeType: String) {
+        self.body = body
+        self.fileName = fileName
+        self.mimeType = mimeType
+    }
+  }
+
 public class Response<T> {
     public let statusCode: Int
     public let header: [String: String]
