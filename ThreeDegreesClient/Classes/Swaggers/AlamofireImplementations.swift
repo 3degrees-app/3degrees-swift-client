@@ -30,7 +30,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
 
         let encoding = isBody ? Alamofire.ParameterEncoding.JSON : Alamofire.ParameterEncoding.URL
         let xMethod = Alamofire.Method(rawValue: method)
-        let fileKeys = parameters == nil ? [] : parameters!.filter { $1.isKindOfClass(NSURL) }
+        let fileKeys = parameters == nil ? [] : parameters!.filter { $1.isKindOfClass(NSURL) || $1.isKindOfClass(FileUpload) }
                                                            .map { $0.0 }
 
         if fileKeys.count > 0 {
