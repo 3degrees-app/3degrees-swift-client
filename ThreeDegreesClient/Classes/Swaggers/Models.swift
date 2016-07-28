@@ -86,7 +86,7 @@ public class FileUpload {
         self.fileName = fileName
         self.mimeType = mimeType
     }
-  }
+}
 
 public class Response<T> {
     public let statusCode: Int
