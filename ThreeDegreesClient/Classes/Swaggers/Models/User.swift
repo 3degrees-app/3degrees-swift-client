@@ -35,8 +35,10 @@ public class User: JSONEncodable {
     public var isSingle: Bool?
     public var location: Location?
     public var matchWithGender: MatchWithGender?
-    /** The user&#39;s matchmakers that are connected to the logged-in user */
+    /** The user&#39;s matchmakers */
     public var matchmakers: [BaseUser]?
+    /** The user&#39;s singles */
+    public var singles: [BaseUser]?
 
     public init() {}
 
@@ -56,6 +58,7 @@ public class User: JSONEncodable {
         nillableDictionary["location"] = self.location?.encodeToJSON()
         nillableDictionary["match_with_gender"] = self.matchWithGender?.rawValue
         nillableDictionary["matchmakers"] = self.matchmakers?.encodeToJSON()
+        nillableDictionary["singles"] = self.singles?.encodeToJSON()
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }

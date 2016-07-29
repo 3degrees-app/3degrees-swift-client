@@ -477,6 +477,7 @@ class Decoders {
                 instance.location = Decoders.decodeOptional(clazz: Location.self, source: sourceDictionary["location"])
                 instance.matchWithGender = PrivateUser.MatchWithGender(rawValue: (sourceDictionary["match_with_gender"] as? String) ?? "") 
                 instance.matchmakers = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["matchmakers"])
+                instance.singles = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["singles"])
                 instance.emailAddress = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["email_address"])
                 instance.password = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"])
                 return instance
@@ -530,6 +531,7 @@ class Decoders {
                 instance.location = Decoders.decodeOptional(clazz: Location.self, source: sourceDictionary["location"])
                 instance.matchWithGender = User.MatchWithGender(rawValue: (sourceDictionary["match_with_gender"] as? String) ?? "") 
                 instance.matchmakers = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["matchmakers"])
+                instance.singles = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["singles"])
                 return instance
             }
 
