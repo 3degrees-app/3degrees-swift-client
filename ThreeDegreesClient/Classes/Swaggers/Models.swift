@@ -228,26 +228,52 @@ class Decoders {
             Decoders.addDecoder(clazz: Activity.self) { (source: AnyObject) -> Activity in
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = Activity()
-                instance.endpoints = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["endpoints"])
+                instance.attributes = Decoders.decodeOptional(clazz: ActivityAttributes.self, source: sourceDictionary["attributes"])
                 instance.icon = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["icon"])
                 instance.id = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["id"])
-                instance.text = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["text"])
+                instance.message = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["message"])
+                instance.responses = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["responses"])
                 instance.timestamp = Decoders.decodeOptional(clazz: NSDate.self, source: sourceDictionary["timestamp"])
                 instance.viewed = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["viewed"])
                 return instance
             }
 
 
-            // Decoder for [ActivityEndpoint]
-            Decoders.addDecoder(clazz: [ActivityEndpoint].self) { (source: AnyObject) -> [ActivityEndpoint] in
-                return Decoders.decode(clazz: [ActivityEndpoint].self, source: source)
+            // Decoder for [ActivityAttributes]
+            Decoders.addDecoder(clazz: [ActivityAttributes].self) { (source: AnyObject) -> [ActivityAttributes] in
+                return Decoders.decode(clazz: [ActivityAttributes].self, source: source)
             }
-            // Decoder for ActivityEndpoint
-            Decoders.addDecoder(clazz: ActivityEndpoint.self) { (source: AnyObject) -> ActivityEndpoint in
+            // Decoder for ActivityAttributes
+            Decoders.addDecoder(clazz: ActivityAttributes.self) { (source: AnyObject) -> ActivityAttributes in
                 let sourceDictionary = source as! [NSObject:AnyObject]
-                let instance = ActivityEndpoint()
-                instance.uri = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["uri"])
-                instance.message = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["message"])
+                let instance = ActivityAttributes()
+                instance.id = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["id"])
+                instance.username = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["username"])
+                return instance
+            }
+
+
+            // Decoder for [ActivityResponse]
+            Decoders.addDecoder(clazz: [ActivityResponse].self) { (source: AnyObject) -> [ActivityResponse] in
+                return Decoders.decode(clazz: [ActivityResponse].self, source: source)
+            }
+            // Decoder for ActivityResponse
+            Decoders.addDecoder(clazz: ActivityResponse.self) { (source: AnyObject) -> ActivityResponse in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = ActivityResponse()
+                instance.text = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["text"])
+                instance.type = Decoders.decodeOptional(clazz: ActivityResponseType.self, source: sourceDictionary["type"])
+                return instance
+            }
+
+
+            // Decoder for [ActivityResponseType]
+            Decoders.addDecoder(clazz: [ActivityResponseType].self) { (source: AnyObject) -> [ActivityResponseType] in
+                return Decoders.decode(clazz: [ActivityResponseType].self, source: source)
+            }
+            // Decoder for ActivityResponseType
+            Decoders.addDecoder(clazz: ActivityResponseType.self) { (source: AnyObject) -> ActivityResponseType in
+                let instance = ActivityResponseType()
                 return instance
             }
 

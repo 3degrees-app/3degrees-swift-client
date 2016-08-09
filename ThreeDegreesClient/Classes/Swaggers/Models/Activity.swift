@@ -10,14 +10,15 @@ import Foundation
 
 /** An entry in a user&#39;s activity list */
 public class Activity: JSONEncodable {
-    /** The endpoints to call in order to respond to the activity */
-    public var endpoints: [ActivityEndpoint]?
+    public var attributes: ActivityAttributes?
     /** The URL of the icon to show next the activity entry */
     public var icon: String?
     /** A unique identifier for this activity */
     public var id: Int32?
     /** The text that describes the activity that was performed */
-    public var text: String?
+    public var message: String?
+    /** The ways to respond to the activity */
+    public var responses: [ActivityResponse]?
     public var timestamp: NSDate?
     public var viewed: Bool?
 
@@ -26,10 +27,11 @@ public class Activity: JSONEncodable {
     // MARK: JSONEncodable
     func encodeToJSON() -> AnyObject {
         var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["endpoints"] = self.endpoints?.encodeToJSON()
+        nillableDictionary["attributes"] = self.attributes?.encodeToJSON()
         nillableDictionary["icon"] = self.icon
         nillableDictionary["id"] = self.id?.encodeToJSON()
-        nillableDictionary["text"] = self.text
+        nillableDictionary["message"] = self.message
+        nillableDictionary["responses"] = self.responses?.encodeToJSON()
         nillableDictionary["timestamp"] = self.timestamp?.encodeToJSON()
         nillableDictionary["viewed"] = self.viewed
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]

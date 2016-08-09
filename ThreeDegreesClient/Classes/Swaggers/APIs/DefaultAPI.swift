@@ -38,14 +38,18 @@ public class DefaultAPI: APIBase {
      - GET /activity
      - Get the recent activity for the logged-in user, in reverse chronological order
      - examples: [{contentType=application/json, example=[ {
-  "endpoints" : [ {
-    "message" : "aeiou",
-    "uri" : "aeiou"
-  } ],
   "viewed" : true,
   "icon" : "aeiou",
+  "responses" : [ {
+    "text" : "aeiou",
+    "type" : { }
+  } ],
+  "attributes" : {
+    "id" : "",
+    "username" : "aeiou"
+  },
   "id" : "",
-  "text" : "aeiou",
+  "message" : "aeiou",
   "timestamp" : { }
 } ]}]
      
