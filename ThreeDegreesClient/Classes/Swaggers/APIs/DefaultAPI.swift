@@ -11,13 +11,22 @@ import Alamofire
 
 public class DefaultAPI: APIBase {
     /**
+     * enum for parameter appMode
+     */
+    public enum AppMode_activityGet: String { 
+        case Matchmaker = "matchmaker"
+        case Single = "single"
+    }
 
+    /**
+
+     - parameter appMode: (query)  (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func activityGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        activityGetWithRequestBuilder(limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+    public class func activityGet(appMode appMode: AppMode_activityGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [Activity]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        activityGetWithRequestBuilder(appMode: appMode, limit: limit, page: page).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
                 if let e = rawError {
@@ -59,16 +68,18 @@ public class DefaultAPI: APIBase {
   "timestamp" : "2000-01-23T04:56:07.000+00:00"
 } ]}]
      
+     - parameter appMode: (query)  (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter page: (query)  (optional, default to 0)
 
      - returns: RequestBuilder<[Activity]> 
      */
-    public class func activityGetWithRequestBuilder(limit limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[Activity]> {
+    public class func activityGetWithRequestBuilder(appMode appMode: AppMode_activityGet? = nil, limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[Activity]> {
         let path = "/activity"
         let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
+            "app_mode": appMode?.rawValue,
             "limit": limit?.encodeToJSON(),
             "page": page?.encodeToJSON()
         ]
