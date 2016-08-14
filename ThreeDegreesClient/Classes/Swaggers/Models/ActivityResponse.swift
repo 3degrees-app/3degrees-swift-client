@@ -13,13 +13,10 @@ public class ActivityResponse: JSONEncodable {
     public enum ActivityResponseType: String { 
         case ConnectionRequestAccept = "connection_request_accept"
         case ConnectionRequestDecline = "connection_request_decline"
-        case ConnectionAcceptedView = "connection_accepted_view"
         case MatchSuggestedAccept = "match_suggested_accept"
         case MatchSuggestedDecline = "match_suggested_decline"
-        case MatchAcceptedView = "match_accepted_view"
         case DateSuggestedAccept = "date_suggested_accept"
         case DateSuggestedSuggest = "date_suggested_suggest"
-        case DateAcceptedView = "date_accepted_view"
         case MessageReceivedView = "message_received_view"
     }
     /** The text to show when presenting the response */
