@@ -21,7 +21,7 @@ public class Activity: JSONEncodable {
     /** The ways to respond to the activity */
     public var responses: [ActivityResponse]?
     public var timestamp: NSDate?
-    public var viewed: Bool?
+    public var viewedAt: NSDate?
 
     public init() {}
 
@@ -35,7 +35,7 @@ public class Activity: JSONEncodable {
         nillableDictionary["origin_user"] = self.originUser?.encodeToJSON()
         nillableDictionary["responses"] = self.responses?.encodeToJSON()
         nillableDictionary["timestamp"] = self.timestamp?.encodeToJSON()
-        nillableDictionary["viewed"] = self.viewed
+        nillableDictionary["viewed_at"] = self.viewedAt?.encodeToJSON()
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
