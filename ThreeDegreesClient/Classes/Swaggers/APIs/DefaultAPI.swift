@@ -40,9 +40,15 @@ public class DefaultAPI: APIBase {
      - examples: [{contentType=application/json, example=[ {
   "viewed" : true,
   "icon" : "aeiou",
+  "origin_user" : {
+    "image" : "aeiou",
+    "last_name" : "aeiou",
+    "first_name" : "aeiou",
+    "username" : "aeiou"
+  },
   "responses" : [ {
-    "text" : "aeiou",
-    "type" : { }
+    "activity_response_type" : "aeiou",
+    "text" : "aeiou"
   } ],
   "attributes" : {
     "id" : "",

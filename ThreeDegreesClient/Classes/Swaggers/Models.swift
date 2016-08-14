@@ -232,6 +232,7 @@ class Decoders {
                 instance.icon = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["icon"])
                 instance.id = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["id"])
                 instance.message = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["message"])
+                instance.originUser = Decoders.decodeOptional(clazz: BaseUser.self, source: sourceDictionary["origin_user"])
                 instance.responses = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["responses"])
                 instance.timestamp = Decoders.decodeOptional(clazz: NSDate.self, source: sourceDictionary["timestamp"])
                 instance.viewed = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["viewed"])
@@ -262,18 +263,7 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = ActivityResponse()
                 instance.text = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["text"])
-                instance.type = Decoders.decodeOptional(clazz: ActivityResponseType.self, source: sourceDictionary["type"])
-                return instance
-            }
-
-
-            // Decoder for [ActivityResponseType]
-            Decoders.addDecoder(clazz: [ActivityResponseType].self) { (source: AnyObject) -> [ActivityResponseType] in
-                return Decoders.decode(clazz: [ActivityResponseType].self, source: source)
-            }
-            // Decoder for ActivityResponseType
-            Decoders.addDecoder(clazz: ActivityResponseType.self) { (source: AnyObject) -> ActivityResponseType in
-                let instance = ActivityResponseType()
+                instance.activityResponseType = ActivityResponse.ActivityResponseType(rawValue: (sourceDictionary["activity_response_type"] as? String) ?? "") 
                 return instance
             }
 

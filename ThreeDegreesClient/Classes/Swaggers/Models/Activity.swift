@@ -17,6 +17,7 @@ public class Activity: JSONEncodable {
     public var id: Int32?
     /** The text that describes the activity that was performed */
     public var message: String?
+    public var originUser: BaseUser?
     /** The ways to respond to the activity */
     public var responses: [ActivityResponse]?
     public var timestamp: NSDate?
@@ -31,6 +32,7 @@ public class Activity: JSONEncodable {
         nillableDictionary["icon"] = self.icon
         nillableDictionary["id"] = self.id?.encodeToJSON()
         nillableDictionary["message"] = self.message
+        nillableDictionary["origin_user"] = self.originUser?.encodeToJSON()
         nillableDictionary["responses"] = self.responses?.encodeToJSON()
         nillableDictionary["timestamp"] = self.timestamp?.encodeToJSON()
         nillableDictionary["viewed"] = self.viewed

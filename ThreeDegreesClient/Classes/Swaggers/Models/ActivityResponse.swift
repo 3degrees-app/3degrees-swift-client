@@ -10,9 +10,22 @@ import Foundation
 
 /** The model that defines the actions that can be taken for a given Activity entry */
 public class ActivityResponse: JSONEncodable {
+    public enum ActivityResponseType: String { 
+        case ConnectionRequestAccept = "connection_request_accept"
+        case ConnectionRequestDecline = "connection_request_decline"
+        case ConnectionAcceptedView = "connection_accepted_view"
+        case MatchSuggestedAccept = "match_suggested_accept"
+        case MatchSuggestedDecline = "match_suggested_decline"
+        case MatchAcceptedView = "match_accepted_view"
+        case DateSuggestedAccept = "date_suggested_accept"
+        case DateSuggestedSuggest = "date_suggested_suggest"
+        case DateAcceptedView = "date_accepted_view"
+        case MessageReceivedView = "message_received_view"
+    }
     /** The text to show when presenting the response */
     public var text: String?
-    public var type: ActivityResponseType?
+    /** The different types of responses to activities */
+    public var activityResponseType: ActivityResponseType?
 
     public init() {}
 
@@ -20,7 +33,7 @@ public class ActivityResponse: JSONEncodable {
     func encodeToJSON() -> AnyObject {
         var nillableDictionary = [String:AnyObject?]()
         nillableDictionary["text"] = self.text
-        nillableDictionary["type"] = self.type?.encodeToJSON()
+        nillableDictionary["activity_response_type"] = self.activityResponseType?.rawValue
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
