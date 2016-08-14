@@ -233,6 +233,7 @@ class Decoders {
                 instance.id = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["id"])
                 instance.message = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["message"])
                 instance.originUser = Decoders.decodeOptional(clazz: BaseUser.self, source: sourceDictionary["origin_user"])
+                instance.responseMessage = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["response_message"])
                 instance.responses = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["responses"])
                 instance.timestamp = Decoders.decodeOptional(clazz: NSDate.self, source: sourceDictionary["timestamp"])
                 instance.viewedAt = Decoders.decodeOptional(clazz: NSDate.self, source: sourceDictionary["viewed_at"])
