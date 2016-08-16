@@ -74,6 +74,8 @@ public enum ErrorResponse : ErrorType {
     case usersUsernameConnectionsPut403(Error)
     case usersUsernameConnectionsPut404(Error)
     case usersUsernameGet404(Error)
+    case usersUsernamePotentialMatchesGet403(Error)
+    case usersUsernamePotentialMatchesGet404(Error)
 }
 
 public class FileUpload {
