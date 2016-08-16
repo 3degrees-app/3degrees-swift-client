@@ -1558,15 +1558,15 @@ public class DefaultAPI: APIBase {
      - parameter query: (query) Text to search for. Will look at the user&#39;s name and username. (optional)
      - parameter singlesOnly: (query) Use this to filter only singles or matchmakers. (optional)
      - parameter excludeMyConnections: (query) Set to true if the logged-in user&#39;s connections should not be included in the results. (optional)
-     - parameter forMyMatches: (query) Results should only include people who can be matched with the logged-in user&#39;s singles. (optional)
+     - parameter forMySingles: (query) Results should only include people who can be matched with the logged-in user&#39;s singles. (optional)
      - parameter ageRange: (query) Filter the results to only results within this age range. (optional)
      - parameter gender: (query)  (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, excludeMyConnections: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, excludeMyConnections: excludeMyConnections, forMyMatches: forMyMatches, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+    public class func usersGet(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, excludeMyConnections: Bool? = nil, forMySingles: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        usersGetWithRequestBuilder(matchmaker: matchmaker, query: query, singlesOnly: singlesOnly, excludeMyConnections: excludeMyConnections, forMySingles: forMySingles, ageRange: ageRange, gender: gender, limit: limit, page: page).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
                 if let e = rawError {
@@ -1595,7 +1595,7 @@ public class DefaultAPI: APIBase {
      - parameter query: (query) Text to search for. Will look at the user&#39;s name and username. (optional)
      - parameter singlesOnly: (query) Use this to filter only singles or matchmakers. (optional)
      - parameter excludeMyConnections: (query) Set to true if the logged-in user&#39;s connections should not be included in the results. (optional)
-     - parameter forMyMatches: (query) Results should only include people who can be matched with the logged-in user&#39;s singles. (optional)
+     - parameter forMySingles: (query) Results should only include people who can be matched with the logged-in user&#39;s singles. (optional)
      - parameter ageRange: (query) Filter the results to only results within this age range. (optional)
      - parameter gender: (query)  (optional)
      - parameter limit: (query)  (optional, default to 100)
@@ -1603,7 +1603,7 @@ public class DefaultAPI: APIBase {
 
      - returns: RequestBuilder<[User]> 
      */
-    public class func usersGetWithRequestBuilder(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, excludeMyConnections: Bool? = nil, forMyMatches: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
+    public class func usersGetWithRequestBuilder(matchmaker matchmaker: String? = nil, query: String? = nil, singlesOnly: Bool? = nil, excludeMyConnections: Bool? = nil, forMySingles: Bool? = nil, ageRange: String? = nil, gender: Gender_usersGet? = nil, limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
         let path = "/users"
         let URLString = ThreeDegreesClientAPI.basePath + path
 
@@ -1612,7 +1612,7 @@ public class DefaultAPI: APIBase {
             "query": query,
             "singles_only": singlesOnly,
             "exclude_my_connections": excludeMyConnections,
-            "for_my_matches": forMyMatches,
+            "for_my_singles": forMySingles,
             "age_range": ageRange,
             "gender": gender?.rawValue,
             "limit": limit?.encodeToJSON(),
