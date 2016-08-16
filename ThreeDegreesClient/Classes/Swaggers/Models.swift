@@ -22,6 +22,7 @@ public enum ErrorResponse : ErrorType {
     case connectionsUsernamePut403(Error)
     case connectionsUsernamePut404(Error)
     case contentContentTypeGet404(Error)
+    case matchesGet403(Error)
     case matchesUsernameDatesPatch403(Error)
     case matchesUsernameDatesPatch404(Error)
     case matchesUsernameDatesPut403(Error)
