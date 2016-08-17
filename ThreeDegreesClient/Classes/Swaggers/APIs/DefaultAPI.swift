@@ -1826,15 +1826,16 @@ public class DefaultAPI: APIBase {
     /**
 
      - parameter username: (path)  
-     - parameter ageRange: (query) Filter the results to only results within this age range. (optional)
+     - parameter ageFrom: (query) Filter the results to only results within this age range. (optional)
+     - parameter ageTo: (query) Filter the results to only results within this age range. (optional)
      - parameter gender: (query)  (optional)
      - parameter matchmaker: (query) Find only singles connected to this matchmaker (username). (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func usersUsernamePotentialMatchesGet(username username: String, ageRange: String? = nil, gender: Gender_usersUsernamePotentialMatchesGet? = nil, matchmaker: String? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        usersUsernamePotentialMatchesGetWithRequestBuilder(username: username, ageRange: ageRange, gender: gender, matchmaker: matchmaker, limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+    public class func usersUsernamePotentialMatchesGet(username username: String, ageFrom: Int32? = nil, ageTo: Int32? = nil, gender: Gender_usersUsernamePotentialMatchesGet? = nil, matchmaker: String? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        usersUsernamePotentialMatchesGetWithRequestBuilder(username: username, ageFrom: ageFrom, ageTo: ageTo, gender: gender, matchmaker: matchmaker, limit: limit, page: page).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
                 if let e = rawError {
@@ -1861,7 +1862,8 @@ public class DefaultAPI: APIBase {
      - examples: [{contentType=application/json, example=[ "" ]}]
      
      - parameter username: (path)  
-     - parameter ageRange: (query) Filter the results to only results within this age range. (optional)
+     - parameter ageFrom: (query) Filter the results to only results within this age range. (optional)
+     - parameter ageTo: (query) Filter the results to only results within this age range. (optional)
      - parameter gender: (query)  (optional)
      - parameter matchmaker: (query) Find only singles connected to this matchmaker (username). (optional)
      - parameter limit: (query)  (optional, default to 100)
@@ -1869,13 +1871,14 @@ public class DefaultAPI: APIBase {
 
      - returns: RequestBuilder<[User]> 
      */
-    public class func usersUsernamePotentialMatchesGetWithRequestBuilder(username username: String, ageRange: String? = nil, gender: Gender_usersUsernamePotentialMatchesGet? = nil, matchmaker: String? = nil, limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
+    public class func usersUsernamePotentialMatchesGetWithRequestBuilder(username username: String, ageFrom: Int32? = nil, ageTo: Int32? = nil, gender: Gender_usersUsernamePotentialMatchesGet? = nil, matchmaker: String? = nil, limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
         var path = "/users/{username}/potential-matches"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
-            "age_range": ageRange,
+            "age_from": ageFrom?.encodeToJSON(),
+            "age_to": ageTo?.encodeToJSON(),
             "gender": gender?.rawValue,
             "matchmaker": matchmaker,
             "limit": limit?.encodeToJSON(),
