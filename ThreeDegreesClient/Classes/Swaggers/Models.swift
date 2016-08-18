@@ -569,6 +569,19 @@ class Decoders {
                 instance.user = Decoders.decodeOptional(clazz: PrivateUser.self, source: sourceDictionary["user"])
                 return instance
             }
+
+
+            // Decoder for [UserName]
+            Decoders.addDecoder(clazz: [UserName].self) { (source: AnyObject) -> [UserName] in
+                return Decoders.decode(clazz: [UserName].self, source: source)
+            }
+            // Decoder for UserName
+            Decoders.addDecoder(clazz: UserName.self) { (source: AnyObject) -> UserName in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = UserName()
+                instance.username = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["username"])
+                return instance
+            }
         }
     }
 }
