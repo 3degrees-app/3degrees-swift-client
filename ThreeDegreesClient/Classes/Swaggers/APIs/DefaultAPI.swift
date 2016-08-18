@@ -1284,7 +1284,7 @@ public class DefaultAPI: APIBase {
      - parameter matchUsername: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func singlesUsernamePatch(username username: String, matchUsername: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+    public class func singlesUsernamePatch(username username: String, matchUsername: UserName, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         singlesUsernamePatchWithRequestBuilder(username: username, matchUsername: matchUsername).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
@@ -1314,7 +1314,7 @@ public class DefaultAPI: APIBase {
 
      - returns: RequestBuilder<Empty> 
      */
-    public class func singlesUsernamePatchWithRequestBuilder(username username: String, matchUsername: String) -> RequestBuilder<Empty> {
+    public class func singlesUsernamePatchWithRequestBuilder(username username: String, matchUsername: UserName) -> RequestBuilder<Empty> {
         var path = "/singles/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
