@@ -23,8 +23,8 @@ public enum ErrorResponse : ErrorType {
     case connectionsUsernamePut404(Error)
     case contentContentTypeGet404(Error)
     case matchesGet403(Error)
-    case matchesUsernameDatesPatch403(Error)
-    case matchesUsernameDatesPatch404(Error)
+    case matchesUsernameDatesDatePut403(Error)
+    case matchesUsernameDatesDatePut404(Error)
     case matchesUsernameDatesPut403(Error)
     case matchesUsernameDatesPut404(Error)
     case matchesUsernameDelete403(Error)
@@ -297,28 +297,6 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = Content()
                 instance.content = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["content"])
-                return instance
-            }
-
-
-            // Decoder for [Date]
-            Decoders.addDecoder(clazz: [Date].self) { (source: AnyObject) -> [Date] in
-                return Decoders.decode(clazz: [Date].self, source: source)
-            }
-            // Decoder for Date
-            Decoders.addDecoder(clazz: Date.self) { (source: AnyObject) -> Date in
-                let instance = Date()
-                return instance
-            }
-
-
-            // Decoder for [DateTime]
-            Decoders.addDecoder(clazz: [DateTime].self) { (source: AnyObject) -> [DateTime] in
-                return Decoders.decode(clazz: [DateTime].self, source: source)
-            }
-            // Decoder for DateTime
-            Decoders.addDecoder(clazz: DateTime.self) { (source: AnyObject) -> DateTime in
-                let instance = DateTime()
                 return instance
             }
 

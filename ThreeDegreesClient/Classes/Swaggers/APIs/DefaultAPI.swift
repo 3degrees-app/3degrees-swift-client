@@ -502,17 +502,17 @@ public class DefaultAPI: APIBase {
     /**
 
      - parameter username: (path)  
-     - parameter date: (body)  
+     - parameter date: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesPatch(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesUsernameDatesPatchWithRequestBuilder(username: username, date: date).execute { (response, rawError, headers) -> Void in
+    public class func matchesUsernameDatesDatePut(username username: String, date: NSDate, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        matchesUsernameDatesDatePutWithRequestBuilder(username: username, date: date).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
                 if let e = rawError {
                     switch e {
-                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDatesPatch403(try Decoders.decode(clazz: Error.self, source: data!))
-                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernameDatesPatch404(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDatesDatePut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernameDatesDatePut404(try Decoders.decode(clazz: Error.self, source: data!))
                         default: err = e
                     }
                 }
@@ -525,25 +525,29 @@ public class DefaultAPI: APIBase {
 
 
     /**
-     - PATCH /matches/{username}/dates
+     - PUT /matches/{username}/dates/{date}
      - Accept the given date
      - examples: [{contentType=application/json, example={ }}]
      
      - parameter username: (path)  
-     - parameter date: (body)  
+     - parameter date: (path)  
 
      - returns: RequestBuilder<Empty> 
      */
-    public class func matchesUsernameDatesPatchWithRequestBuilder(username username: String, date: NSDate) -> RequestBuilder<Empty> {
-        var path = "/matches/{username}/dates"
+    public class func matchesUsernameDatesDatePutWithRequestBuilder(username username: String, date: NSDate) -> RequestBuilder<Empty> {
+        var path = "/matches/{username}/dates/{date}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
+        path = path.stringByReplacingOccurrencesOfString("{date}", withString: "\(date)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
-        let parameters = date.encodeToJSON() as? [String:AnyObject]
+
+        let nillableParameters: [String:AnyObject?] = [:]
+
+        let parameters = APIHelper.rejectNil(nillableParameters)
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
         let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
-        let requestBuilder = requestBuilderClass.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
         requestBuilder.addHeaders(["Accept": "application/json"])
         return requestBuilder
     }
