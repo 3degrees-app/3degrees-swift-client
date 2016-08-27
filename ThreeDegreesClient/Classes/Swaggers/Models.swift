@@ -268,6 +268,7 @@ class Decoders {
                 let instance = ActivityResponse()
                 instance.text = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["text"])
                 instance.activityResponseType = ActivityResponse.ActivityResponseType(rawValue: (sourceDictionary["activity_response_type"] as? String) ?? "") 
+                instance.responseMessage = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["response_message"])
                 return instance
             }
 

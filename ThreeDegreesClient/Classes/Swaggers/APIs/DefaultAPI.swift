@@ -57,6 +57,7 @@ public class DefaultAPI: APIBase {
     "username" : "aeiou"
   },
   "responses" : [ {
+    "response_message" : "aeiou",
     "activity_response_type" : "aeiou",
     "text" : "aeiou"
   } ],

@@ -21,6 +21,8 @@ public class ActivityResponse: JSONEncodable {
     public var text: String?
     /** The different types of responses to activities */
     public var activityResponseType: ActivityResponseType?
+    /** The text that describes the action a user took when responding to an activity. Optional. */
+    public var responseMessage: String?
 
     public init() {}
 
@@ -29,6 +31,7 @@ public class ActivityResponse: JSONEncodable {
         var nillableDictionary = [String:AnyObject?]()
         nillableDictionary["text"] = self.text
         nillableDictionary["activity_response_type"] = self.activityResponseType?.rawValue
+        nillableDictionary["response_message"] = self.responseMessage
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
