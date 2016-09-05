@@ -193,17 +193,17 @@ public class DefaultAPI: APIBase {
 
     /**
 
-     - parameter emailAddress: (body)  
+     - parameter emailAddress: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func authForgotPasswordPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        authForgotPasswordPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, rawError, headers) -> Void in
+    public class func authForgotPasswordEmailAddressPut(emailAddress emailAddress: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        authForgotPasswordEmailAddressPutWithRequestBuilder(emailAddress: emailAddress).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
                 if let e = rawError {
                     switch e {
-                        case let .RawError(400, data, _): err = ErrorResponse.authForgotPasswordPut400(try Decoders.decode(clazz: Error.self, source: data!))
-                        case let .RawError(404, data, _): err = ErrorResponse.authForgotPasswordPut404(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(400, data, _): err = ErrorResponse.authForgotPasswordEmailAddressPut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.authForgotPasswordEmailAddressPut404(try Decoders.decode(clazz: Error.self, source: data!))
                         default: err = e
                     }
                 }
@@ -216,18 +216,22 @@ public class DefaultAPI: APIBase {
 
 
     /**
-     - PUT /auth/forgot-password
+     - PUT /auth/forgot-password/{emailAddress}
      - Initiate the forgot-password process for accounts that use the email login type
      - examples: [{contentType=application/json, example={ }}]
      
-     - parameter emailAddress: (body)  
+     - parameter emailAddress: (path)  
 
      - returns: RequestBuilder<Empty> 
      */
-    public class func authForgotPasswordPutWithRequestBuilder(emailAddress emailAddress: String) -> RequestBuilder<Empty> {
-        let path = "/auth/forgot-password"
+    public class func authForgotPasswordEmailAddressPutWithRequestBuilder(emailAddress emailAddress: String) -> RequestBuilder<Empty> {
+        var path = "/auth/forgot-password/{emailAddress}"
+        path = path.stringByReplacingOccurrencesOfString("{emailAddress}", withString: "\(emailAddress)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
-        let parameters = emailAddress.encodeToJSON() as? [String:AnyObject]
+
+        let nillableParameters: [String:AnyObject?] = [:]
+
+        let parameters = APIHelper.rejectNil(nillableParameters)
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
