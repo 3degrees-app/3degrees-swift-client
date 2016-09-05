@@ -202,6 +202,7 @@ public class DefaultAPI: APIBase {
             do {
                 if let e = rawError {
                     switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.authForgotPasswordPut400(try Decoders.decode(clazz: Error.self, source: data!))
                         case let .RawError(404, data, _): err = ErrorResponse.authForgotPasswordPut404(try Decoders.decode(clazz: Error.self, source: data!))
                         default: err = e
                     }
@@ -216,7 +217,7 @@ public class DefaultAPI: APIBase {
 
     /**
      - PUT /auth/forgot-password
-     - Initiate the forgot-password process.
+     - Initiate the forgot-password process for accounts that use the email login type
      - examples: [{contentType=application/json, example={ }}]
      
      - parameter emailAddress: (body)  
@@ -445,13 +446,22 @@ public class DefaultAPI: APIBase {
     }
 
     /**
+     * enum for parameter matchType
+     */
+    public enum MatchType_matchesGet: String { 
+        case Accepted = "accepted"
+        case Pending = "pending"
+    }
 
+    /**
+
+     - parameter matchType: (query)  (optional, default to accepted)
      - parameter limit: (query)  (optional, default to 100)
      - parameter page: (query)  (optional, default to 0)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesGet(limit limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
-        matchesGetWithRequestBuilder(limit: limit, page: page).execute { (response, rawError, headers) -> Void in
+    public class func matchesGet(matchType matchType: MatchType_matchesGet? = nil, limit: Int32? = nil, page: Int32? = nil, completion: ((data: [User]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        matchesGetWithRequestBuilder(matchType: matchType, limit: limit, page: page).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
                 if let e = rawError {
@@ -470,22 +480,24 @@ public class DefaultAPI: APIBase {
 
     /**
      - GET /matches
-     - Get the list of active matches for the logged-in user. If page > 0 and the result list is empty, there are no more connected users to show.
+     - Get the list of active matches for the logged-in user. Use the match_type parameter to determine which type of matches are returned: matches that were already accepted vs pending matches that must be accepted by one party. If page > 0 and the result list is empty, there are no more connected users to show.
      - responseHeaders: [count(Int32), limit(Int32), page(Int32)]
      - responseHeaders: [count(Int32), limit(Int32), page(Int32)]
      - responseHeaders: [count(Int32), limit(Int32), page(Int32)]
      - examples: [{contentType=application/json, example=[ "" ]}]
      
+     - parameter matchType: (query)  (optional, default to accepted)
      - parameter limit: (query)  (optional, default to 100)
      - parameter page: (query)  (optional, default to 0)
 
      - returns: RequestBuilder<[User]> 
      */
-    public class func matchesGetWithRequestBuilder(limit limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
+    public class func matchesGetWithRequestBuilder(matchType matchType: MatchType_matchesGet? = nil, limit: Int32? = nil, page: Int32? = nil) -> RequestBuilder<[User]> {
         let path = "/matches"
         let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [
+            "match_type": matchType?.rawValue,
             "limit": limit?.encodeToJSON(),
             "page": page?.encodeToJSON()
         ]
@@ -549,6 +561,56 @@ public class DefaultAPI: APIBase {
 
         let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
         let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
+    }
+
+    /**
+
+     - parameter username: (path)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    public class func matchesUsernameDatesGet(username username: String, completion: ((data: [NSDate]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        matchesUsernameDatesGetWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.matchesUsernameDatesGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.matchesUsernameDatesGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
+        }
+    }
+
+
+    /**
+     - GET /matches/{username}/dates
+     - Lists the dates (date and time) that the :username user has suggested to meet with the logged-in user.
+     - examples: [{contentType=application/json, example=[ "2000-01-23T04:56:07.000+00:00" ]}]
+     
+     - parameter username: (path)  
+
+     - returns: RequestBuilder<[NSDate]> 
+     */
+    public class func matchesUsernameDatesGetWithRequestBuilder(username username: String) -> RequestBuilder<[NSDate]> {
+        var path = "/matches/{username}/dates"
+        path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
+        let URLString = ThreeDegreesClientAPI.basePath + path
+
+        let nillableParameters: [String:AnyObject?] = [:]
+
+        let parameters = APIHelper.rejectNil(nillableParameters)
+
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+
+        let requestBuilderClass: RequestBuilder<[NSDate]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
         requestBuilder.addHeaders(["Accept": "application/json"])
         return requestBuilder
     }
