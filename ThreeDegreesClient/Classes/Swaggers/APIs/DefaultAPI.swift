@@ -1077,6 +1077,54 @@ public class DefaultAPI: APIBase {
 
     /**
 
+     - parameter passwordForm: (body)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    public class func mePasswordPut(passwordForm passwordForm: PasswordForm, completion: ((data: SessionKey?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        mePasswordPutWithRequestBuilder(passwordForm: passwordForm).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(400, data, _): err = ErrorResponse.mePasswordPut400(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(403, data, _): err = ErrorResponse.mePasswordPut403(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
+        }
+    }
+
+
+    /**
+     - PUT /me/password
+     - Set password for the logged-in user.
+     - examples: [{contentType=application/json, example={
+  "key" : "aeiou"
+}}]
+     
+     - parameter passwordForm: (body)  
+
+     - returns: RequestBuilder<SessionKey> 
+     */
+    public class func mePasswordPutWithRequestBuilder(passwordForm passwordForm: PasswordForm) -> RequestBuilder<SessionKey> {
+        let path = "/me/password"
+        let URLString = ThreeDegreesClientAPI.basePath + path
+        let parameters = passwordForm.encodeToJSON() as? [String:AnyObject]
+
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+
+        let requestBuilderClass: RequestBuilder<SessionKey>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
+    }
+
+    /**
+
      - parameter user: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */

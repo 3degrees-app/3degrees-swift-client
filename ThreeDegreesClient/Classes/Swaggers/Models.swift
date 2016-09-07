@@ -46,6 +46,8 @@ public enum ErrorResponse : ErrorType {
     case meIsSinglePut403(Error)
     case meMatchWithGenderPut400(Error)
     case meMatchWithGenderPut403(Error)
+    case mePasswordPut400(Error)
+    case mePasswordPut403(Error)
     case mePut400(Error)
     case mePut403(Error)
     case messagesUsernameGet403(Error)
@@ -454,6 +456,19 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = MessageForm()
                 instance.message = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["message"])
+                return instance
+            }
+
+
+            // Decoder for [PasswordForm]
+            Decoders.addDecoder(clazz: [PasswordForm].self) { (source: AnyObject) -> [PasswordForm] in
+                return Decoders.decode(clazz: [PasswordForm].self, source: source)
+            }
+            // Decoder for PasswordForm
+            Decoders.addDecoder(clazz: PasswordForm.self) { (source: AnyObject) -> PasswordForm in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = PasswordForm()
+                instance.password = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"])
                 return instance
             }
 
