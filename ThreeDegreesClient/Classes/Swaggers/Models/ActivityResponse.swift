@@ -17,7 +17,7 @@ public class ActivityResponse: JSONEncodable {
         case DateSuggestedView = "date_suggested_view"
         case MatchSuggestedView = "match_suggested_view"
         case MatchSuggestedSecondDegreeView = "match_suggested_second_degree_view"
-        case MatchAcceptedView = "match_accepted_view"
+        case MatchAcceptedChat = "match_accepted_chat"
         case MatchAcceptedByMeSuggest = "match_accepted_by_me_suggest"
         case MessageReceivedView = "message_received_view"
     }
