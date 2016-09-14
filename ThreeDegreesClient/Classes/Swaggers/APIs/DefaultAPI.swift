@@ -722,13 +722,13 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernamePut(username username: String, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+    public class func matchesUsernamePut(username username: String, completion: ((data: Status?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         matchesUsernamePutWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
                 if let e = rawError {
                     switch e {
-                        case let .RawError(301, data, _): err = ErrorResponse.matchesUsernamePut301(try Decoders.decode(clazz: Empty.self, source: data!))
+                        case let .RawError(202, data, _): err = ErrorResponse.matchesUsernamePut202(try Decoders.decode(clazz: Status.self, source: data!))
                         case let .RawError(403, data, _): err = ErrorResponse.matchesUsernamePut403(try Decoders.decode(clazz: Error.self, source: data!))
                         case let .RawError(404, data, _): err = ErrorResponse.matchesUsernamePut404(try Decoders.decode(clazz: Error.self, source: data!))
                         default: err = e
@@ -745,13 +745,15 @@ public class DefaultAPI: APIBase {
     /**
      - PUT /matches/{username}
      - Logged-in user accepts a suggested match with the given username. Will notify the other single and all associated matchmakers.
-     - examples: [{contentType=application/json, example={ }}]
+     - examples: [{contentType=application/json, example={
+  "status" : "aeiou"
+}}]
      
      - parameter username: (path)  
 
-     - returns: RequestBuilder<Empty> 
+     - returns: RequestBuilder<Status> 
      */
-    public class func matchesUsernamePutWithRequestBuilder(username username: String) -> RequestBuilder<Empty> {
+    public class func matchesUsernamePutWithRequestBuilder(username username: String) -> RequestBuilder<Status> {
         var path = "/matches/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
@@ -762,7 +764,7 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<Empty>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilderClass: RequestBuilder<Status>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
         let requestBuilder = requestBuilderClass.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
         requestBuilder.addHeaders(["Accept": "application/json"])
         return requestBuilder

@@ -31,7 +31,7 @@ public enum ErrorResponse : ErrorType {
     case matchesUsernameDatesPut403(Error)
     case matchesUsernameDatesPut404(Error)
     case matchesUsernameDelete403(Error)
-    case matchesUsernamePut301(Empty)
+    case matchesUsernamePut202(Status)
     case matchesUsernamePut403(Error)
     case matchesUsernamePut404(Error)
     case matchmakersGet403(Error)
@@ -510,6 +510,19 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = SessionKey()
                 instance.key = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["key"])
+                return instance
+            }
+
+
+            // Decoder for [Status]
+            Decoders.addDecoder(clazz: [Status].self) { (source: AnyObject) -> [Status] in
+                return Decoders.decode(clazz: [Status].self, source: source)
+            }
+            // Decoder for Status
+            Decoders.addDecoder(clazz: Status.self) { (source: AnyObject) -> Status in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = Status()
+                instance.status = Status.Status(rawValue: (sourceDictionary["status"] as? String) ?? "") 
                 return instance
             }
 
