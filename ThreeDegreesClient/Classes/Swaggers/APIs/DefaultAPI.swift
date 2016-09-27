@@ -423,7 +423,7 @@ public class DefaultAPI: APIBase {
 
     /**
      - GET /content/{contentType}
-     - Get static content. Current supported content-type: tos, privacy-policy, faq.
+     - Get static content. Current supported content-type: invite.message, tos, privacy-policy, faq.
      - examples: [{contentType=application/json, example={
   "content" : "aeiou"
 }}]
@@ -435,6 +435,60 @@ public class DefaultAPI: APIBase {
     public class func contentContentTypeGetWithRequestBuilder(contentType contentType: String) -> RequestBuilder<Content> {
         var path = "/content/{contentType}"
         path = path.stringByReplacingOccurrencesOfString("{contentType}", withString: "\(contentType)", options: .LiteralSearch, range: nil)
+        let URLString = ThreeDegreesClientAPI.basePath + path
+
+        let nillableParameters: [String:AnyObject?] = [:]
+
+        let parameters = APIHelper.rejectNil(nillableParameters)
+
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+
+        let requestBuilderClass: RequestBuilder<Content>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
+    }
+
+    /**
+
+     - parameter contentType: (path)  
+     - parameter language: (path)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    public class func contentContentTypeLanguageGet(contentType contentType: String, language: String, completion: ((data: Content?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        contentContentTypeLanguageGetWithRequestBuilder(contentType: contentType, language: language).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(404, data, _): err = ErrorResponse.contentContentTypeLanguageGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
+        }
+    }
+
+
+    /**
+     - GET /content/{contentType}/{language}
+     - Get static content. Current supported content-type: invite.message, tos, privacy-policy, faq.
+     - examples: [{contentType=application/json, example={
+  "content" : "aeiou"
+}}]
+     
+     - parameter contentType: (path)  
+     - parameter language: (path)  
+
+     - returns: RequestBuilder<Content> 
+     */
+    public class func contentContentTypeLanguageGetWithRequestBuilder(contentType contentType: String, language: String) -> RequestBuilder<Content> {
+        var path = "/content/{contentType}/{language}"
+        path = path.stringByReplacingOccurrencesOfString("{contentType}", withString: "\(contentType)", options: .LiteralSearch, range: nil)
+        path = path.stringByReplacingOccurrencesOfString("{language}", withString: "\(language)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
