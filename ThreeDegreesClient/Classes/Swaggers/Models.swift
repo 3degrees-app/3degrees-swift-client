@@ -13,6 +13,8 @@ protocol JSONEncodable {
 public enum ErrorResponse : ErrorType {
     case RawError(Int, NSData?, ErrorType)
     case activityGet403(Error)
+    case activityIdGet403(Error)
+    case activityIdGet404(Error)
     case activityIdPut403(Error)
     case activityIdPut404(Error)
     case authDelete403(Error)
@@ -304,6 +306,19 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = Content()
                 instance.content = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["content"])
+                return instance
+            }
+
+
+            // Decoder for [Dates]
+            Decoders.addDecoder(clazz: [Dates].self) { (source: AnyObject) -> [Dates] in
+                return Decoders.decode(clazz: [Dates].self, source: source)
+            }
+            // Decoder for Dates
+            Decoders.addDecoder(clazz: Dates.self) { (source: AnyObject) -> Dates in
+                let sourceDictionary = source as! [NSObject:AnyObject]
+                let instance = Dates()
+                instance.dates = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["dates"])
                 return instance
             }
 

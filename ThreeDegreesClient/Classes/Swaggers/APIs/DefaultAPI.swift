@@ -101,6 +101,78 @@ public class DefaultAPI: APIBase {
      - parameter id: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
+    public class func activityIdGet(id id: Int32, completion: ((data: Activity?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+        activityIdGetWithRequestBuilder(id: id).execute { (response, rawError, headers) -> Void in
+            var err: ErrorType? = nil
+            do {
+                if let e = rawError {
+                    switch e {
+                        case let .RawError(403, data, _): err = ErrorResponse.activityIdGet403(try Decoders.decode(clazz: Error.self, source: data!))
+                        case let .RawError(404, data, _): err = ErrorResponse.activityIdGet404(try Decoders.decode(clazz: Error.self, source: data!))
+                        default: err = e
+                    }
+                }
+            } catch {
+                err = error
+            }
+            completion(data: response?.body, error: err, headers: headers);
+        }
+    }
+
+
+    /**
+     - GET /activity/{id}
+     - Get details about a specific activity entry
+     - examples: [{contentType=application/json, example={
+  "response_message" : "aeiou",
+  "viewed_at" : "2000-01-23T04:56:07.000+00:00",
+  "icon" : "aeiou",
+  "origin_user" : {
+    "image" : "aeiou",
+    "last_name" : "aeiou",
+    "first_name" : "aeiou",
+    "username" : "aeiou"
+  },
+  "responses" : [ {
+    "response_message" : "aeiou",
+    "activity_response_type" : "aeiou",
+    "text" : "aeiou"
+  } ],
+  "attributes" : {
+    "id" : "",
+    "username" : "aeiou"
+  },
+  "id" : "",
+  "message" : "aeiou",
+  "timestamp" : "2000-01-23T04:56:07.000+00:00"
+}}]
+     
+     - parameter id: (path)  
+
+     - returns: RequestBuilder<Activity> 
+     */
+    public class func activityIdGetWithRequestBuilder(id id: Int32) -> RequestBuilder<Activity> {
+        var path = "/activity/{id}"
+        path = path.stringByReplacingOccurrencesOfString("{id}", withString: "\(id)", options: .LiteralSearch, range: nil)
+        let URLString = ThreeDegreesClientAPI.basePath + path
+
+        let nillableParameters: [String:AnyObject?] = [:]
+
+        let parameters = APIHelper.rejectNil(nillableParameters)
+
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+
+        let requestBuilderClass: RequestBuilder<Activity>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        requestBuilder.addHeaders(["Accept": "application/json"])
+        return requestBuilder
+    }
+
+    /**
+
+     - parameter id: (path)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
     public class func activityIdPut(id id: Int32, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         activityIdPutWithRequestBuilder(id: id).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
@@ -628,7 +700,7 @@ public class DefaultAPI: APIBase {
      - parameter username: (path)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesGet(username username: String, completion: ((data: [NSDate]?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+    public class func matchesUsernameDatesGet(username username: String, completion: ((data: Dates?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         matchesUsernameDatesGetWithRequestBuilder(username: username).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
@@ -650,13 +722,15 @@ public class DefaultAPI: APIBase {
     /**
      - GET /matches/{username}/dates
      - Lists the dates (date and time) that the :username user has suggested to meet with the logged-in user.
-     - examples: [{contentType=application/json, example=[ "2000-01-23T04:56:07.000+00:00" ]}]
+     - examples: [{contentType=application/json, example={
+  "dates" : [ "2000-01-23T04:56:07.000+00:00" ]
+}}]
      
      - parameter username: (path)  
 
-     - returns: RequestBuilder<[NSDate]> 
+     - returns: RequestBuilder<Dates> 
      */
-    public class func matchesUsernameDatesGetWithRequestBuilder(username username: String) -> RequestBuilder<[NSDate]> {
+    public class func matchesUsernameDatesGetWithRequestBuilder(username username: String) -> RequestBuilder<Dates> {
         var path = "/matches/{username}/dates"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
@@ -667,7 +741,7 @@ public class DefaultAPI: APIBase {
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
 
-        let requestBuilderClass: RequestBuilder<[NSDate]>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilderClass: RequestBuilder<Dates>.Type = ThreeDegreesClientAPI.requestBuilderFactory.getBuilder()
         let requestBuilder = requestBuilderClass.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
         requestBuilder.addHeaders(["Accept": "application/json"])
         return requestBuilder
@@ -679,7 +753,7 @@ public class DefaultAPI: APIBase {
      - parameter dates: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func matchesUsernameDatesPut(username username: String, dates: [NSDate], completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
+    public class func matchesUsernameDatesPut(username username: String, dates: Dates, completion: ((data: Empty?, error: ErrorType?, headers: Dictionary<NSObject, AnyObject>) -> Void)) {
         matchesUsernameDatesPutWithRequestBuilder(username: username, dates: dates).execute { (response, rawError, headers) -> Void in
             var err: ErrorType? = nil
             do {
@@ -708,7 +782,7 @@ public class DefaultAPI: APIBase {
 
      - returns: RequestBuilder<Empty> 
      */
-    public class func matchesUsernameDatesPutWithRequestBuilder(username username: String, dates: [NSDate]) -> RequestBuilder<Empty> {
+    public class func matchesUsernameDatesPutWithRequestBuilder(username username: String, dates: Dates) -> RequestBuilder<Empty> {
         var path = "/matches/{username}/dates"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
