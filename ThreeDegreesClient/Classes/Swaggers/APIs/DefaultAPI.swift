@@ -298,7 +298,7 @@ public class DefaultAPI: APIBase {
      */
     public class func authForgotPasswordEmailAddressPutWithRequestBuilder(emailAddress emailAddress: String) -> RequestBuilder<Empty> {
         var path = "/auth/forgot-password/{emailAddress}"
-        path = path.stringByReplacingOccurrencesOfString("{emailAddress}", withString: "\(emailAddress)", options: .LiteralSearch, range: nil)
+        path = path.stringByReplacingOccurrencesOfString("{email_address}", withString: "\(emailAddress)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
@@ -359,7 +359,7 @@ public class DefaultAPI: APIBase {
      */
     public class func authLoginTypePutWithRequestBuilder(loginType loginType: LoginType_authLoginTypePut, loginForm: LoginForm) -> RequestBuilder<SessionKey> {
         var path = "/auth/{loginType}"
-        path = path.stringByReplacingOccurrencesOfString("{loginType}", withString: "\(loginType.rawValue)", options: .LiteralSearch, range: nil)
+        path = path.stringByReplacingOccurrencesOfString("{login_type}", withString: "\(loginType.rawValue)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
         let parameters = loginForm.encodeToJSON() as? [String:AnyObject]
 
@@ -506,7 +506,7 @@ public class DefaultAPI: APIBase {
      */
     public class func contentContentTypeGetWithRequestBuilder(contentType contentType: String) -> RequestBuilder<Content> {
         var path = "/content/{contentType}"
-        path = path.stringByReplacingOccurrencesOfString("{contentType}", withString: "\(contentType)", options: .LiteralSearch, range: nil)
+        path = path.stringByReplacingOccurrencesOfString("{content_type}", withString: "\(contentType)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
 
         let nillableParameters: [String:AnyObject?] = [:]
@@ -559,7 +559,7 @@ public class DefaultAPI: APIBase {
      */
     public class func contentContentTypeLanguageGetWithRequestBuilder(contentType contentType: String, language: String) -> RequestBuilder<Content> {
         var path = "/content/{contentType}/{language}"
-        path = path.stringByReplacingOccurrencesOfString("{contentType}", withString: "\(contentType)", options: .LiteralSearch, range: nil)
+        path = path.stringByReplacingOccurrencesOfString("{content_type}", withString: "\(contentType)", options: .LiteralSearch, range: nil)
         path = path.stringByReplacingOccurrencesOfString("{language}", withString: "\(language)", options: .LiteralSearch, range: nil)
         let URLString = ThreeDegreesClientAPI.basePath + path
 

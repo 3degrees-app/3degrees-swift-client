@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
   s.homepage = 'https://api.threedegreesapp.com'
   s.summary = 'Generated client'
   s.source_files = 'ThreeDegreesClient/Classes/Swaggers/**/*.swift'
-  s.dependency 'Alamofire', '~> 3.1.5'
+  s.dependency 'Alamofire', '~> 4.0.1'
 end
