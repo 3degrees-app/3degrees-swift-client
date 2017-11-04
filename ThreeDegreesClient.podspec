@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.authors = 'rlmartin@gmail.com'
   s.license = 'Apache License, Version 2.0'
   s.homepage = 'https://api.threedegreesapp.com'
-  s.summary = 'Generated client'
+  s.summary = 'Client library for 3degrees API'
   s.source_files = 'ThreeDegreesClient/Classes/Swaggers/**/*.swift'
   s.dependency 'Alamofire', '~> 3.4.1'
 end
