@@ -1,0 +1,7 @@
+{
+  "podAuthors": "rlmartin@gmail.com",
+  "podHomepage": "https://api.threedegreesapp.com",
+  "podSummary": "Client library for 3degrees API",
+  "podVersion": "1.0.0",
+  "projectName": "ThreeDegreesClient"
+}

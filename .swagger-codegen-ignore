@@ -21,3 +21,8 @@
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
+
+# This imports Foundation, but that doesn't compile - so ignoring that here.
+ThreeDegreesClient/Classes/Swaggers/APIHelper.swift
+
+README.md
