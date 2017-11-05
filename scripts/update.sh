@@ -6,7 +6,6 @@ if [ -z "$1" ]; then
 fi
 
 cat config.json | jq ".podVersion = \"$1\"" > config.json.tmp
-cat config.json.tmp
 mv config.json.tmp config.json
 
 java \
