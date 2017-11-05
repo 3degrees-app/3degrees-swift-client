@@ -25,4 +25,7 @@
 # This imports Foundation, but that doesn't compile - so ignoring that here.
 ThreeDegreesClient/Classes/Swaggers/APIHelper.swift
 
+# This comes from the generator; don't really need it.
+git_push.sh
+
 README.md
